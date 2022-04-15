@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c44ecbfb514cfe4e897266f50d34644, type: 3}
+  m_Name: RedeemScriptableObject
+  m_EditorClassIdentifier: 
+  RedeemDictionary:
+    m_keys: 0000000001000000
+    m_values:
+    - Name: girldm headpat
+      Cost: 100
+    - Name: 
+      Cost: 0
+  ThemeColorDictionary:
+    m_keys: 
+    m_values: []
+  RandoUsernameList:
+  - Jim
+  - John
+  - Jacob
+  SubbedUsernameList:
+  - sdfsd
+  - sderw
+  SubTierNameList:
+  - SubTier1
+  - SubTier2
+  - SubTier3
+  EmojiList:
+  - girldmCrime
+  - girldmPanic
+  ChatText:
+  - ayo
+  - hi
+  - what this
+  - iodsufiodss
+  - ewrwerwe
+  - <sprite name="girldmCrime"><sprite name="girldmCrime"><sprite name="girldmCrime"><sprite
+    name="girldmCrime"><sprite name="girldmCrime">
