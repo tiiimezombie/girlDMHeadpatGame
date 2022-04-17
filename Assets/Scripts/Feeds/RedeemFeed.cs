@@ -31,7 +31,7 @@ public class RedeemFeed : BaseFeed
 
         if (redeemType == RedeemType.Headpat)
         {
-            HeadpatController.Instance.AddHeadpats(CurrencyController.ShopTiersPurchased[ShopType.HeadpatRedeemTier]);
+            HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatRedeemTier].Tier);
         }
 
         AddEntry(_dataObject.GetAudienceUsername(viewer), redeem);
@@ -48,7 +48,7 @@ public class RedeemFeed : BaseFeed
         _entryArray[_index].transform.SetAsLastSibling();
         if (isHeadpat)
         {
-            int tier = CurrencyController.ShopTiersPurchased[ShopType.HeadpatRedeemTier];
+            int tier = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatRedeemTier].Tier;
             _entryArray[_index].Setup(username + " redeemed " + redeem.Name + " x " + tier + " <sprite name=\"channelPoint\"> " + (redeem.Cost * tier));
         }
         else

@@ -54,13 +54,13 @@ public class ClickTracker : MonoBehaviour
     public void ClickDM()
     {
         Debug.Log("pat");
-        if (Random.Range(0, 100) < CurrencyController.ShopTiersPurchased[ShopType.ClickCritChance])
+        if (Random.Range(0, 100) < CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickCritChance].Tier)
         {
-            ComboCount += HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.ShopTiersPurchased[ShopType.ClickValue] + CurrencyController.ShopTiersPurchased[ShopType.ClickCritValue] ^ 2);
+            ComboCount += HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier + CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickCritValue].Tier ^ 2);
         }
         else
         {
-            ComboCount += HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.ShopTiersPurchased[ShopType.ClickValue]);
+            ComboCount += HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier);
         }        
 
         _comboTween.Kill();

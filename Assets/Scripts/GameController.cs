@@ -32,6 +32,30 @@ public class GameController : Singleton<GameController>
         return array[array.Length - 1];
     }
 
+    private static string[] _suffixArray =
+    {
+        "K", "M", "B", "T", "AA", "BB", "CC", "DD", "EE", "FF"
+    };
+
+    public static string GetPrettyDouble(double value)
+    {
+        var initial = value;
+
+        if (value < 1000)
+        {
+            return value.ToString();
+        }
+
+        for (int i = 0; i < _suffixArray.Length; i++)
+        {
+            value /= 1000;
+
+            if (value < 1000) return value.ToString() + _suffixArray[i];
+        }
+
+        return initial.ToString("N0");
+    }
+
     //public static int GetWeightedRandomFrom2DArray(int[][] array)
     //{
     //    int max = 0;

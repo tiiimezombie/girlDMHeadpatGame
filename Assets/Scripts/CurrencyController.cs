@@ -1,15 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum ShopType
-{
-    HeadpatRedeemTier,
-    ClickValue,
-    ClickCritChance,
-    ClickCritValue
-}
+
 
 public class CurrencyController : Singleton<CurrencyController>
 {
@@ -56,16 +51,47 @@ public class CurrencyController : Singleton<CurrencyController>
 
     #endregion
 
-    public static Dictionary<ShopType, int> ShopTiersPurchased = new Dictionary<ShopType, int>();
+    public static Action RefreshShopButtons;
+    public ShopScriptableObject ShopLibrary;
+
+    //public static Dictionary<ShopType, int> ShopTiersPurchased = new Dictionary<ShopType, int>();
 
     private void Start()
     {
         Money = 0;
         XP = 0;
 
-        foreach (var v in System.Enum.GetValues(typeof(ShopType)))
+        foreach (var thing in ShopLibrary.ShopDictionary)
         {
-            ShopTiersPurchased.Add((ShopType)v, 1);
+            thing.Value.Reset();
         }
+
+        //foreach (var v in System.Enum.GetValues(typeof(ShopType)))
+        //{
+        //    ShopTiersPurchased.Add((ShopType)v, 1);
+        //}
+    }
+
+    public void BuyShopItem(ShopType type)
+    {
+        var a = ShopLibrary.ShopDictionary[type].Currency;
+        if (a == CurrencyType.Money)
+            Money -= ShopLibrary.ShopDictionary[type].FullCost;
+        else if (a == CurrencyType.XP)
+            XP -= ShopLibrary.ShopDictionary[type].FullCost;
+        ShopLibrary.ShopDictionary[type].IncrementTier();
+
+        RefreshShopButtons?.Invoke();
+    }
+
+    public bool CanBuyShopItem(ShopType type)
+    {
+        var a = ShopLibrary.ShopDictionary[type].Currency;
+        if (a == CurrencyType.Money)
+            return Money > ShopLibrary.ShopDictionary[type].FullCost;
+        else if (a == CurrencyType.XP)
+            return XP > ShopLibrary.ShopDictionary[type].FullCost;
+        else
+            return false;
     }
 }

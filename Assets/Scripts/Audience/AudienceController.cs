@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using DG.Tweening;
 
 public enum AudienceMemberType
 {
@@ -25,12 +26,19 @@ public class AudienceController : Singleton<AudienceController>
     private bool _playing;
 
     // good neutral evil
-    private int[] _audienceCompositionPercentArray_standard =
+    private int[] _audienceCompositionPercentArray_current;
+
+    private readonly int[] _audienceCompositionPercentArray_standard =
     {
         15, 70, 15,
     };
 
-    private int[] _audienceCompositionPercentArray_postSubs =
+    private readonly int[] _audienceCompositionPercentArray_postRaid =
+    {
+        10, 55, 35,
+    };
+
+    private readonly int[] _audienceCompositionPercentArray_postSubs =
     {
         35, 60, 5,
     };
@@ -51,6 +59,7 @@ public class AudienceController : Singleton<AudienceController>
         }
     }
     private double _viewerCount;
+    private double _realViewerCount;
 
     // Timers
     private class Timer
@@ -84,8 +93,8 @@ public class AudienceController : Singleton<AudienceController>
     }
 
     private List<Timer> _timerList;
-    private Timer _giftSubModeTimer;
-    private bool _giftSubMode;
+    private Timer _audienceChangeMode;
+    private bool _audienceChanged;
 
     private enum TimerType
     {
@@ -103,6 +112,13 @@ public class AudienceController : Singleton<AudienceController>
         Bits
     }
 
+    private enum ViewerSourceType
+    {
+        Normal,
+        Raid,
+        Reward
+    }
+
     private void Start()
     {
         _dataObject.Init();
@@ -115,16 +131,18 @@ public class AudienceController : Singleton<AudienceController>
             new Timer(()=>{ TimeUp(TimerType.RandomEvent); }, 20),
         };
 
-        _giftSubModeTimer = new Timer(() => { _giftSubMode = false; }, 0);
+        _audienceChangeMode = new Timer(() => { _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard; }, 0);
 
-        ViewerCount = 25;
+        _realViewerCount = 25;
+        ViewerCount = _realViewerCount;
+        _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard;
 
         _playing = true;
     }
 
     private void TimeUp(TimerType type)
     {
-        var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_standard);
+        var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
 
         // based on chat comp
         // so x number of neutral chat + y evil chat + z sub chat
@@ -140,7 +158,7 @@ public class AudienceController : Singleton<AudienceController>
                 DemandedRedeem?.Invoke(viewer);
                 break;
             case TimerType.ViewerCount:
-                ViewerCount += UnityEngine.Random.Range(-5, 20);
+                AddViewers(UnityEngine.Random.Range(-5, 20), ViewerSourceType.Normal);
                 break;
             case TimerType.RandomEvent:
                 var a = (RandomEventType)UnityEngine.Random.Range(0, 4); // TODO: does she have a bits announcement
@@ -153,29 +171,22 @@ public class AudienceController : Singleton<AudienceController>
                         break;
                     case RandomEventType.GiftSubs:
                         int subs = GameController.GetWeightedRandomFromArray(_generosityPercentArray);
-
-                        _giftSubMode = true;
-                        _giftSubModeTimer.ChangeTimerMax(subs * 10);
-
-                        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "is gifting " + subs + " sub(s)!");
+                        AddSubs(subs, false);
                         break;
                     case RandomEventType.Raid:
                         int newViewers = 50 * GameController.GetWeightedRandomFromArray(_generosityPercentArray);
-                        ViewerCount += newViewers;
-                        _announcement.AddMessage(_dataObject.GetMutualUsername(), "raided!!");
+                        AddViewers(newViewers, ViewerSourceType.Raid);
                         break;
                     case RandomEventType.Bits:
                         int bits = GameController.GetWeightedRandomFromArray(_generosityPercentArray);
                         CurrencyController.Instance.AddMoney(bits);
-                        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "cheered x" + (bits * 100));
+                        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "threw coins x" + (bits * 100));
                         break;
                 }
 
                 break;
         }
     }
-
-
 
     void Update()
     {
@@ -186,16 +197,65 @@ public class AudienceController : Singleton<AudienceController>
             _timerList[i].Increment();
         }
 
-        if (_giftSubMode) _giftSubModeTimer.Increment();
+        if (_audienceChanged) _audienceChangeMode.Increment();
     }
 
-    internal void AddSubsAsReward(int v)
+    internal void AddSubs(int subs, bool asReward)
     {
-        throw new NotImplementedException();
+        _audienceChangeMode.ChangeTimerMax(subs * 10);
+        _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_postSubs;
+        _audienceChanged = true;
+
+        if (asReward)
+            _announcement.AddMessage("girl_dm_", "is gifting " + subs + " sub(s)!");
+        else
+            _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "is gifting " + subs + " sub(s)!");
     }
 
-    internal void AddViewersAsReward(int v)
+    internal void AddViewersAsReward(int viewers)
     {
-        throw new NotImplementedException();
+        AddViewers(viewers, ViewerSourceType.Reward);
+    }
+
+    Coroutine _viewerAddCoroutine;
+    bool _counting;
+    private void AddViewers(int viewers, ViewerSourceType source)
+    {
+        _audienceChangeMode.ChangeTimerMax(viewers / 5);
+        _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_postRaid;
+        _audienceChanged = true;
+
+        if (source == ViewerSourceType.Raid)
+        {
+            _announcement.AddMessage(_dataObject.GetMutualUsername(), "raided!!!");
+        } 
+        else if (source == ViewerSourceType.Reward)
+        {
+            _announcement.AddMessage("girl_dm_", "invited her friends");
+        }
+
+        if (_viewerAddCoroutine != null) StopCoroutine(_viewerAddCoroutine);
+        _realViewerCount += viewers;
+        if (_realViewerCount < 0) _realViewerCount = 0;
+
+        _viewerAddCoroutine = StartCoroutine(SlowlyAddViewers());
+    }
+
+    WaitForSeconds boo = new WaitForSeconds(0.5f);
+
+    IEnumerator SlowlyAddViewers()
+    {
+        var a = _realViewerCount - _viewerCount;
+        a /= 10;
+        a = Math.Round(a);
+        var remainder = (_realViewerCount - _viewerCount) - (a * 10);
+
+        _viewerCount += remainder;
+
+        for (int i = 0; i < 10; i++)
+        {
+            ViewerCount += a;
+            yield return boo;
+        }
     }
 }

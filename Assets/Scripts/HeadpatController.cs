@@ -17,7 +17,7 @@ public class HeadpatController : Singleton<HeadpatController>
         set
         {
             _patsRedeemed = value;
-            _patsRedeemedText.text = _patsRedeemed.ToString("N0");
+            _patsRedeemedText.text = GameController.GetPrettyDouble(_patsRedeemed); // _patsRedeemed.ToString("N0");
         }
     }
     private double _patsRedeemed = 0;
@@ -28,7 +28,7 @@ public class HeadpatController : Singleton<HeadpatController>
         private set
         {
             _patsQueued = value;
-            _patsQueuedText.text = _patsQueued.ToString("N0");
+            _patsQueuedText.text = GameController.GetPrettyDouble(_patsQueued); //_patsQueued.ToString("N0");
         }
     }
     private double _patsQueued;
@@ -38,7 +38,6 @@ public class HeadpatController : Singleton<HeadpatController>
         base.Awake();
         _milestoneController = GetComponent<MilestoneController>();
     }
-
 
     private void Start()
     {

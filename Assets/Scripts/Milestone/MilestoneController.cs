@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MilestoneController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class MilestoneController : MonoBehaviour
     [SerializeField] private MilestonePopup _popup;
     [SerializeField] private GameObject _xpTextGO;
     [SerializeField] private GameObject _milestoneButtonGO;
+    [SerializeField] private Button _shopButton;
 
     [SerializeField] private List<int> _baseMilestoneList;
     private List<int> _milestoneList;
@@ -49,6 +51,7 @@ public class MilestoneController : MonoBehaviour
         MilestoneCount++;
         _xpTextGO.SetActive(false);
         _milestoneButtonGO.SetActive(true);
+        _shopButton.enabled = false;
         _popup.AddMilestoneContents(CreateMilestoneCollection());
     }
 
@@ -59,6 +62,7 @@ public class MilestoneController : MonoBehaviour
         {
             _xpTextGO.SetActive(true);
             _milestoneButtonGO.SetActive(false);
+            _shopButton.enabled = true;
         }
     }
 
@@ -101,7 +105,7 @@ public class MilestoneController : MonoBehaviour
                     Name = _moneyRewardNames[Random.Range(0, _moneyRewardNames.Length)],
                     Icon = "+<sprite name=\"viewerIcon\">",
                     Action = () => { 
-                        AudienceController.Instance.AddSubsAsReward(currentMilestone * 2);
+                        AudienceController.Instance.AddSubs(currentMilestone * 2, true);
                         RemoveMilestone();
                     }
                 };

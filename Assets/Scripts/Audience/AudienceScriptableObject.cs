@@ -52,7 +52,7 @@ public class AudienceScriptableObject : ScriptableObject
     #region -- Redeems --
     internal RedeemType ChooseRedeemTypeByAudience(AudienceMemberType viewer)
     {
-        return (RedeemType)GameController.GetItemFromArray(_redeemPreferenceDictionary[viewer]);
+        return (RedeemType)GameController.GetWeightedRandomFromArray(_redeemPreferenceDictionary[viewer]);
 
         //switch (viewer)
         //{
@@ -70,7 +70,15 @@ public class AudienceScriptableObject : ScriptableObject
 
     internal Redeem GetRedeem(RedeemType redeemType)
     {
-        return RedeemDictionary[redeemType];
+        try
+        {
+            return RedeemDictionary[redeemType];
+        }
+        catch
+        {
+            Debug.LogError(redeemType + " not in dictionary wtf");
+            return null;
+        }
     }
 
     #endregion
