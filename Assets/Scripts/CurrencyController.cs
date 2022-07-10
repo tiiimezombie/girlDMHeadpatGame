@@ -49,6 +49,18 @@ public class CurrencyController : Singleton<CurrencyController>
         XP += xp;
     }
 
+    public void AddXP(ShopType type)
+    {
+        if (type == ShopType.ChatXPValue)
+        {
+            XP += ShopLibrary.ShopDictionary[type].Tier;
+        } 
+        else if (type == ShopType.RedeemXPValue)
+        {
+            XP += ShopLibrary.ShopDictionary[type].Tier;
+        }
+    }
+
     #endregion
 
     public static Action RefreshShopButtons;
@@ -82,15 +94,17 @@ public class CurrencyController : Singleton<CurrencyController>
         ShopLibrary.ShopDictionary[type].IncrementTier();
 
         RefreshShopButtons?.Invoke();
+
+        AudienceController.Instance.SetTimerMax(type);
     }
 
     public bool CanBuyShopItem(ShopType type)
     {
         var a = ShopLibrary.ShopDictionary[type].Currency;
         if (a == CurrencyType.Money)
-            return Money > ShopLibrary.ShopDictionary[type].FullCost;
+            return Money >= ShopLibrary.ShopDictionary[type].FullCost;
         else if (a == CurrencyType.XP)
-            return XP > ShopLibrary.ShopDictionary[type].FullCost;
+            return XP >= ShopLibrary.ShopDictionary[type].FullCost;
         else
             return false;
     }

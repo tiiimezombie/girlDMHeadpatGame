@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class UpgradeShop : BaseShop
 {
-    // Update is called once per frame
-    void Update()
+    protected override void RefreshShopButtons()
     {
-        
+        throw new System.NotImplementedException();
     }
 }

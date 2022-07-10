@@ -8,7 +8,7 @@ using UnityEditor;
 public class ShopScriptableObject : ScriptableObject
 {
 #if UNITY_EDITOR
-    [MenuItem("Assets/Create/TZ/Audience")]
+    [MenuItem("Assets/Create/TZ/Shop")]
     public static ShopScriptableObject Create()
     {
         ShopScriptableObject asset = ScriptableObject.CreateInstance<ShopScriptableObject>();
@@ -20,29 +20,45 @@ public class ShopScriptableObject : ScriptableObject
 #endif
 
     public ShopDictionary ShopDictionary = new ShopDictionary();
+    public MilestoneDictionary MilestoneDictionary = new MilestoneDictionary();
 }
 
 public enum CurrencyType
 {
     Money,
-    XP
+    XP,
+    Milestone
 }
 
 public enum ShopType
 {
-    HeadpatRedeemTier,
+    HeadpatDelay,
+    HeadpatValue,
+    ChatXPValue,
+    DonationDelay,
+    DonationValue,
+    RedeemXPValue,
+    SubDelay,
+    SubValue,
+    ChatCommands,
+    HypeTrainDelay,
     ClickValue,
-    ClickCritChance,
-    ClickCritValue
+    ClickCritValue,
+
+    Socials,
+    RaidValue,
+    Partnerships,
+    SubDiscount,
 }
 
 [System.Serializable]
 public class ShopItem
 {
     public string Name;
-    public CurrencyType Currency;
-    public int Tier;
-    public int BaseCost;
+    public Sprite Sprite;
+    public CurrencyType Currency = CurrencyType.XP;
+    public int Tier = 1;
+    public int BaseCost = 1;
     //    public int UnlockRequirement;
 
     public int FullCost { get => BaseCost * Tier; }
@@ -70,3 +86,6 @@ public class ShopItem
 
 [System.Serializable]
 public class ShopDictionary : SerializableDictionary<ShopType, ShopItem> { }
+
+[System.Serializable]
+public class MilestoneDictionary : SerializableDictionary<ShopType, ShopItem> { }

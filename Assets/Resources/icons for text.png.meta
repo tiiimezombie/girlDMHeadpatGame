@@ -29,6 +29,54 @@ TextureImporter:
   - first:
       213: 8013022989438183431
     second: viewerIcon
+  - first:
+      213: 8665512893035967410
+    second: money
+  - first:
+      213: 7247061634417511352
+    second: milestone
+  - first:
+      213: -4816298276650400747
+    second: xp
+  - first:
+      213: 1389229860077161554
+    second: girldmHiF
+  - first:
+      213: 4014765168821700858
+    second: girldmHuh
+  - first:
+      213: -8357109529352414401
+    second: girldmComfy
+  - first:
+      213: 3747266499970668746
+    second: girldmCheer
+  - first:
+      213: 7066583151397577505
+    second: girldmLove
+  - first:
+      213: -2851212977724285506
+    second: girldmYandere
+  - first:
+      213: 3582117742953382228
+    second: girldmPewpew
+  - first:
+      213: 3739386231250989704
+    second: girldmSip
+  - first:
+      213: -833271240806256764
+    second: girldmHug
+  - first:
+      213: 6590467681024056739
+    second: girldmPlead
+  - first:
+      213: -6793592011390894624
+    second: girldmDab
+  - first:
+      213: -4359563614128648932
+    second: girldmOwo
+  - first:
+      213: -8766440772483471547
+    second: girldmZoom
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -129,10 +177,10 @@ TextureImporter:
       name: channelPoint
       rect:
         serializedVersion: 2
-        x: 1
-        y: 205
-        width: 50
-        height: 50
+        x: 5
+        y: 930
+        width: 84
+        height: 84
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +198,10 @@ TextureImporter:
       name: headpat
       rect:
         serializedVersion: 2
-        x: 52
-        y: 205
-        width: 50
-        height: 50
+        x: 107
+        y: 924
+        width: 95
+        height: 95
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,10 +219,10 @@ TextureImporter:
       name: SubTier1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 50
-        height: 50
+        x: 2
+        y: 719
+        width: 99
+        height: 99
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +240,10 @@ TextureImporter:
       name: SubTier2
       rect:
         serializedVersion: 2
-        x: 52
-        y: 1
-        width: 50
-        height: 50
+        x: 104
+        y: 719
+        width: 99
+        height: 99
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,10 +261,10 @@ TextureImporter:
       name: SubTier3
       rect:
         serializedVersion: 2
-        x: 103
-        y: 1
-        width: 50
-        height: 50
+        x: 206
+        y: 719
+        width: 99
+        height: 99
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,8 +282,8 @@ TextureImporter:
       name: genericPat
       rect:
         serializedVersion: 2
-        x: 1
-        y: 52
+        x: 188
+        y: 886
         width: 50
         height: 50
       alignment: 1
@@ -255,10 +303,10 @@ TextureImporter:
       name: girldmCrime
       rect:
         serializedVersion: 2
-        x: 52
-        y: 52
-        width: 50
-        height: 50
+        x: 104
+        y: 515
+        width: 99
+        height: 99
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +324,10 @@ TextureImporter:
       name: girldmPanic
       rect:
         serializedVersion: 2
-        x: 103
-        y: 52
-        width: 50
-        height: 50
+        x: 2
+        y: 515
+        width: 99
+        height: 99
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,10 +345,10 @@ TextureImporter:
       name: viewerIcon
       rect:
         serializedVersion: 2
-        x: 205
-        y: 1
-        width: 50
-        height: 50
+        x: 317
+        y: 827
+        width: 81
+        height: 82
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,6 +358,342 @@ TextureImporter:
       bones: []
       spriteID: 708608e34f9f33f60800000000000000
       internalID: 8013022989438183431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: money
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 923
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b3f9f97016124870800000000000000
+      internalID: 8665512893035967410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: milestone
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 924
+        width: 90
+        height: 90
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bb41d0f82cb29460800000000000000
+      internalID: 7247061634417511352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: xp
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 923
+        width: 95
+        height: 95
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5144de73c32192db0800000000000000
+      internalID: -4816298276650400747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmHiF
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 617
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25cc3418239874310800000000000000
+      internalID: 1389229860077161554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmHuh
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 617
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af88a3066af47b730800000000000000
+      internalID: 4014765168821700858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmComfy
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 617
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3bdae13925950c80800000000000000
+      internalID: -8357109529352414401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmCheer
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 617
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac819712707f00430800000000000000
+      internalID: 3747266499970668746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmLove
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 617
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12320d29feb811260800000000000000
+      internalID: 7066583151397577505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmYandere
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 515
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd92c337e47e68d0800000000000000
+      internalID: -2851212977724285506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmPewpew
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 515
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4514c5cbb1d36b130800000000000000
+      internalID: 3582117742953382228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmSip
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 515
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 882b3b717f7f4e330800000000000000
+      internalID: 3739386231250989704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmHug
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 413
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48fa13aa830af64f0800000000000000
+      internalID: -833271240806256764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmPlead
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 413
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ad9127207b067b50800000000000000
+      internalID: 6590467681024056739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmDab
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 413
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ed3d144f0058b1a0800000000000000
+      internalID: -6793592011390894624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmOwo
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 413
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1dc42cadf7bf73c0800000000000000
+      internalID: -4359563614128648932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: girldmZoom
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 413
+        width: 99
+        height: 99
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5472f936098575680800000000000000
+      internalID: -8766440772483471547
       vertices: []
       indices: 
       edges: []

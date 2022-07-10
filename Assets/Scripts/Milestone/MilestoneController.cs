@@ -51,7 +51,7 @@ public class MilestoneController : MonoBehaviour
         MilestoneCount++;
         _xpTextGO.SetActive(false);
         _milestoneButtonGO.SetActive(true);
-        _shopButton.enabled = false;
+        _shopButton.interactable = false;
         _popup.AddMilestoneContents(CreateMilestoneCollection());
     }
 
@@ -62,7 +62,7 @@ public class MilestoneController : MonoBehaviour
         {
             _xpTextGO.SetActive(true);
             _milestoneButtonGO.SetActive(false);
-            _shopButton.enabled = true;
+            _shopButton.interactable = true;
         }
     }
 
@@ -93,7 +93,7 @@ public class MilestoneController : MonoBehaviour
                 return new MilestoneReward
                 {
                     Name = _moneyRewardNames[Random.Range(0, _moneyRewardNames.Length)],
-                    Icon = "+<sprite name=\"viewerIcon\">",
+                    Icon = "+<sprite name=\"money\" color=#000000>",
                     Action = () => { 
                         CurrencyController.Instance.AddMoney(currentMilestone);
                         RemoveMilestone();
@@ -102,8 +102,8 @@ public class MilestoneController : MonoBehaviour
             case MilestoneRewardType.Subs:
                 return new MilestoneReward
                 {
-                    Name = _moneyRewardNames[Random.Range(0, _moneyRewardNames.Length)],
-                    Icon = "+<sprite name=\"viewerIcon\">",
+                    Name = _subRewardNames[Random.Range(0, _subRewardNames.Length)],
+                    Icon = "+<sprite name=\"SubTier3\" color=#000000>",
                     Action = () => { 
                         AudienceController.Instance.AddSubs(currentMilestone * 2, true);
                         RemoveMilestone();
@@ -112,8 +112,8 @@ public class MilestoneController : MonoBehaviour
             case MilestoneRewardType.Viewers:
                 return new MilestoneReward
                 {
-                    Name = _moneyRewardNames[Random.Range(0, _moneyRewardNames.Length)],
-                    Icon = "+<sprite name=\"viewerIcon\">",
+                    Name = _viewerRewardNames[Random.Range(0, _viewerRewardNames.Length)],
+                    Icon = "+<sprite name=\"viewerIcon\" color=#000000>",
                     Action = () => { 
                         AudienceController.Instance.AddViewersAsReward(currentMilestone * 10);
                         RemoveMilestone();

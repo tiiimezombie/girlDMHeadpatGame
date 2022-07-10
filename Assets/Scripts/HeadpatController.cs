@@ -52,7 +52,7 @@ public class HeadpatController : Singleton<HeadpatController>
 
     public double HeadPatRemainder(double combo, int numHeadPatsToCheck)
     {
-        if (combo + numHeadPatsToCheck < PatsQueued) return numHeadPatsToCheck;
+        if (combo + numHeadPatsToCheck <= PatsQueued) return numHeadPatsToCheck;
         return PatsQueued - combo;
     }
 

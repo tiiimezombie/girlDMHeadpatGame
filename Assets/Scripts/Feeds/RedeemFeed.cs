@@ -15,26 +15,6 @@ public class RedeemFeed : BaseFeed
         {
             v.gameObject.SetActive(false);
         }
-
-        AudienceController.DemandedRedeem += SelectRedeem;
-    }
-
-    protected void OnDestroy()
-    {
-        AudienceController.DemandedRedeem -= SelectRedeem;
-    }
-
-    private void SelectRedeem(AudienceMemberType viewer)
-    {
-        var redeemType = _dataObject.ChooseRedeemTypeByAudience(viewer);
-        var redeem = _dataObject.GetRedeem(redeemType);
-
-        if (redeemType == RedeemType.Headpat)
-        {
-            HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatRedeemTier].Tier);
-        }
-
-        AddEntry(_dataObject.GetAudienceUsername(viewer), redeem);
     }
 
     public void AddEntry(string username, Redeem redeem, bool isHeadpat = false)
@@ -48,8 +28,12 @@ public class RedeemFeed : BaseFeed
         _entryArray[_index].transform.SetAsLastSibling();
         if (isHeadpat)
         {
-            int tier = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatRedeemTier].Tier;
+            int tier = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier;
             _entryArray[_index].Setup(username + " redeemed " + redeem.Name + " x " + tier + " <sprite name=\"channelPoint\"> " + (redeem.Cost * tier));
+        }
+        else if (redeem.NeedsInteraction)
+        {
+            _entryArray[_index].Setup(username + " redeemed " + redeem.Name + " <sprite name=\"channelPoint\"> " + redeem.Cost, true, (state) => { if (state) CurrencyController.Instance.AddXP(ShopType.RedeemXPValue); });
         }
         else
         {

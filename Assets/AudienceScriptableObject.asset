@@ -61,13 +61,22 @@ MonoBehaviour:
     m_keys: 000000000100000002000000
     m_values:
     - data:
-      - chat1
-      - chat2
+      - I like this stream <size=120%><sprite name="girldmCheer">
+      - Fun stream idea!
     - data:
-      - emote1
-      - emote2
+      - <size=120%><sprite name="girldmHiF"> <sprite name="girldmHiF"> <sprite name="girldmHiF">
+      - <size=120%><sprite name="girldmHiF"> <sprite name="girldmHiF">
     - data:
-      - complain1
+      - Boooooo stream sux
       - complain2
   MutualNames:
   - Jowol
+  - Imma Lee
+  - Sigh You
+  - Giri
+  - Bold Lily
+  - Baoooo
+  - Cheesy Doki
+  - Violet Doodle
+  - How2Car
+  - Layna's Lasers

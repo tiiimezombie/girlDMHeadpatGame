@@ -43,14 +43,14 @@ public class GameController : Singleton<GameController>
 
         if (value < 1000)
         {
-            return value.ToString();
+            return value.ToString("N0");
         }
 
         for (int i = 0; i < _suffixArray.Length; i++)
         {
             value /= 1000;
 
-            if (value < 1000) return value.ToString() + _suffixArray[i];
+            if (value < 1000) return value.ToString("N2") + _suffixArray[i];
         }
 
         return initial.ToString("N0");

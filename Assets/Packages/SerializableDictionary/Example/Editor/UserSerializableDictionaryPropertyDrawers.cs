@@ -13,6 +13,9 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(AudienceRedeemPreferenceDictionary))]
 [CustomPropertyDrawer(typeof(AudienceChatPreferenceDictionary))]
 
+[CustomPropertyDrawer(typeof(ShopDictionary))]
+[CustomPropertyDrawer(typeof(MilestoneDictionary))]
+
 [CustomPropertyDrawer(typeof(ThemeColorDictionary))]
 
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer {}

@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed39bf2913ce1bb41a3d28974b4ac0cb, type: 3}
+  m_Name: ShopScriptableObject
+  m_EditorClassIdentifier: 
+  ShopDictionary:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
+    m_values:
+    - Name: Headpat Rate
+      Sprite: {fileID: -7421358021936057052, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Headpat Value
+      Sprite: {fileID: 3358780678965872710, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Chat XP Value
+      Sprite: {fileID: -7421358021936057052, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Donation Rate
+      Sprite: {fileID: 0}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Donation Value
+      Sprite: {fileID: 0}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Redeem XP
+      Sprite: {fileID: 0}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Sub Delay
+      Sprite: {fileID: 0}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Donation Value
+      Sprite: {fileID: 0}
+      Currency: 1
+      Tier: 1
+      BaseCost: 1
+    - Name: Chat Commands
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 1
+      BaseCost: 1
+    - Name: Donation Value
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 1
+      BaseCost: 1
+    - Name: Donation Value
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 1
+      BaseCost: 1
+    - Name: Click Crit Chance
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 1
+      BaseCost: 1
+  MilestoneDictionary:
+    m_keys: 0c0000000d0000000e0000000f000000
+    m_values:
+    - Name: Socials
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 0
+      BaseCost: 0
+    - Name: Raids
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 0
+      BaseCost: 0
+    - Name: Partners
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 0
+      BaseCost: 0
+    - Name: Discounts
+      Sprite: {fileID: 0}
+      Currency: 0
+      Tier: 0
+      BaseCost: 0

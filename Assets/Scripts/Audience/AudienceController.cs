@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 public enum AudienceMemberType
 {
@@ -17,10 +18,10 @@ public class AudienceController : Singleton<AudienceController>
     public static event Action<AudienceMemberType> DemandedRedeem;
     public static event Action<AudienceMemberType> DemandedChat;
 
-    [SerializeField] private Announcement _announcement;
-
     [SerializeField] private AudienceScriptableObject _dataObject;
-
+    [SerializeField] private ChatFeed _chatFeed;
+    [SerializeField] private RedeemFeed _redeemFeed;
+    [SerializeField] private Announcement _announcement;
     [SerializeField] private TextMeshProUGUI _viewerCountText;
 
     private bool _playing;
@@ -60,6 +61,14 @@ public class AudienceController : Singleton<AudienceController>
     }
     private double _viewerCount;
     private double _realViewerCount;
+    private double _subCount;
+
+    private double _headPatterCount;
+    private double _chatterCount;
+    private double _redeemerCount;
+    private double _donatorCount;
+    private double _gifterCount;
+    private double _lurkerCount;
 
     // Timers
     private class Timer
@@ -85,22 +94,38 @@ public class AudienceController : Singleton<AudienceController>
             }
         }
 
-        public void ChangeTimerMax (int max)
+        public void ChangeTimerMax(int max)
         {
             TimerMax = max;
             _timer = 0;
         }
+
+        public void DecreaseTimerMax(int decrease)
+        {
+            TimerMax -= decrease;
+            if (TimerMax < 1) TimerMax = 1;
+            _timer = 0;
+        }
     }
 
-    private List<Timer> _timerList;
+    private Dictionary<TimerType, Timer> _timerDictionary = new Dictionary<TimerType, Timer>();
+
+    //private List<Timer> _timerList;
     private Timer _audienceChangeMode;
     private bool _audienceChanged;
 
     private enum TimerType
     {
-        Redeem,
+        Headpat,
         Chat,
+        Redemption,
+        Donation,
+        SubGift,
+        SubMonthEnd,
+
         ViewerCount,
+        Partnerships,
+        HypeTrain,
         RandomEvent
     }
 
@@ -123,13 +148,20 @@ public class AudienceController : Singleton<AudienceController>
     {
         _dataObject.Init();
 
-        _timerList = new List<Timer>
-        {
-            new Timer(()=>{ TimeUp(TimerType.Redeem); }, 5),
-            new Timer(()=>{ TimeUp(TimerType.Chat); }, 7),
-            new Timer(()=>{ TimeUp(TimerType.ViewerCount); }, 10),
-            new Timer(()=>{ TimeUp(TimerType.RandomEvent); }, 20),
-        };
+        // Audience controller has a list of events that happen regularly
+        // When they occur, they change values, notify various UI systems, and set the timer
+        // TODO some way to track which timer needs to happen faster when the shop item is bought :/
+        _timerDictionary.Add(TimerType.Headpat, new Timer(() => { HeadPatTimeUp(); }, 8));
+        _timerDictionary.Add(TimerType.Chat, new Timer(() => { ChatTimeUp(); }, 8));
+        _timerDictionary.Add(TimerType.Redemption, new Timer(() => { RedemptionTimeUp(); }, 24));
+        _timerDictionary.Add(TimerType.Donation, new Timer(() => { DonationTimeUp(); }, 30));
+        _timerDictionary.Add(TimerType.SubGift, new Timer(() => { SubGiftTimeUp(); }, 45));
+        _timerDictionary.Add(TimerType.SubMonthEnd, new Timer(() => { SubMonthEndTimeUp(); }, 120));
+
+        _timerDictionary.Add(TimerType.ViewerCount, new Timer(() => { ViewerCountTimeUp(); }, 10));
+        _timerDictionary.Add(TimerType.Partnerships, new Timer(() => { PartnershipTimeUp(); }, 60));
+        _timerDictionary.Add(TimerType.HypeTrain, new Timer(() => { HypeTrainTimeUp(); }, 90));
+        // random event?
 
         _audienceChangeMode = new Timer(() => { _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard; }, 0);
 
@@ -140,61 +172,128 @@ public class AudienceController : Singleton<AudienceController>
         _playing = true;
     }
 
-    private void TimeUp(TimerType type)
+    #region -- TimeUp --
+
+    private void HeadPatTimeUp()
     {
+        HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier);
+        _redeemFeed.AddEntry("Headpat fan 100", _dataObject.GetRedeem(RedeemType.Headpat), true);
+    }
+
+    private void ChatTimeUp()
+    {
+        // it's either flat rate of x% for xp generation
+        // or based on recent raid/ % audience composition
+
+        // chat percent array
+
+        var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
+        var chat = _dataObject.ChooseChatTypeByAudience(viewer);
+        _chatFeed.AddEntry(chat, _dataObject.GetAudienceUsername(viewer), _dataObject.GetChat(chat));
+    }
+
+    private void RedemptionTimeUp()
+    {
+        // Redeem percent array
+
         var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
 
-        // based on chat comp
-        // so x number of neutral chat + y evil chat + z sub chat
-        // pick from percents
-        // Probably just off/on of "Sub Mode" where temporarily chat improves?
+        var redeemType = _dataObject.ChooseRedeemTypeByAudience(viewer);
+        _redeemFeed.AddEntry(_dataObject.GetAudienceUsername(viewer), _dataObject.GetRedeem(redeemType));
+    }
 
-        switch (type)
+    private void DonationTimeUp()
+    {
+        if (_realViewerCount < 64) return;
+
+        // normal bits, 1.5x bits, 2x bits, $1
+        int[] aa = { 15, 5, 1 };
+        int[] multiplierArray = { 1, 2, 5 };
+
+        int generosityIndex = GameController.GetWeightedRandomFromArray(aa);
+        int multiplier = multiplierArray[generosityIndex];
+
+        int donation = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.DonationValue].Tier * multiplier;
+
+        // or set generosity
+        if (Random.Range(0, 10) < 3)
         {
-            case TimerType.Chat:
-                DemandedChat?.Invoke(viewer);
-                break;
-            case TimerType.Redeem:
-                DemandedRedeem?.Invoke(viewer);
-                break;
-            case TimerType.ViewerCount:
-                AddViewers(UnityEngine.Random.Range(-5, 20), ViewerSourceType.Normal);
-                break;
-            case TimerType.RandomEvent:
-                var a = (RandomEventType)UnityEngine.Random.Range(0, 4); // TODO: does she have a bits announcement
-                switch (a)
-                {
-                    case RandomEventType.Donation:
-                        int donation = 5 * GameController.GetWeightedRandomFromArray(_generosityPercentArray);
-                        CurrencyController.Instance.AddMoney(donation);
-                        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "donated $" + donation);
-                        break;
-                    case RandomEventType.GiftSubs:
-                        int subs = GameController.GetWeightedRandomFromArray(_generosityPercentArray);
-                        AddSubs(subs, false);
-                        break;
-                    case RandomEventType.Raid:
-                        int newViewers = 50 * GameController.GetWeightedRandomFromArray(_generosityPercentArray);
-                        AddViewers(newViewers, ViewerSourceType.Raid);
-                        break;
-                    case RandomEventType.Bits:
-                        int bits = GameController.GetWeightedRandomFromArray(_generosityPercentArray);
-                        CurrencyController.Instance.AddMoney(bits);
-                        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "threw coins x" + (bits * 100));
-                        break;
-                }
-
-                break;
+            // dollars
+            CurrencyController.Instance.AddMoney(donation);
+            _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "donated $" + donation);
+        }
+        else
+        {
+            // bits
+            CurrencyController.Instance.AddMoney(donation);
+            _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "threw coins x" + (donation * 100));
         }
     }
+
+    private void SubGiftTimeUp()
+    {
+        if (_realViewerCount < 32) return;
+
+        int subs =
+            CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.DonationValue].Tier *
+            GameController.GetWeightedRandomFromArray(_generosityPercentArray);
+
+        if (CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.SubDiscount].Tier > 0)
+            subs *= CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.SubDiscount].Tier;
+
+        _subCount += subs;
+
+        AddSubs(subs, false);
+    }
+
+    private void SubMonthEndTimeUp()
+    {
+        _announcement.AddMessage("Sub Renewal", GameController.GetPrettyDouble(_subCount) + " sub(s)");
+
+        CurrencyController.Instance.AddMoney(_subCount);
+    }
+
+    private void ViewerCountTimeUp()
+    {
+        if (Random.Range(0, 10) < 3 && CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.RaidValue].Tier > 0)
+        {
+            int newViewers =
+                GameController.GetWeightedRandomFromArray(_generosityPercentArray) *
+                CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.RaidValue].Tier *
+                25;
+            if (newViewers > 0) AddViewers(newViewers, ViewerSourceType.Raid);
+        }
+        else
+        {
+            // var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
+            AddViewers(
+                (int) Math.Pow(Random.Range(-5, 10), CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Socials].Tier),
+                ViewerSourceType.Normal);
+        }
+    }
+
+    private void PartnershipTimeUp()
+    {
+        CurrencyController.Instance.AddMoney(CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Partnerships].Tier);
+    }
+
+    private void HypeTrainTimeUp()
+    {
+        if (_realViewerCount < 128) return;
+
+        Debug.LogError("SET HYPE TRAIN UP BETTER");
+        //CurrencyController.Instance.AddMoney(CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Partnerships].Tier);
+    }
+
+    #endregion
 
     void Update()
     {
         if (!_playing) return;
 
-        for (int i = 0; i < _timerList.Count; i++)
+        foreach (var v in _timerDictionary.Values)
         {
-            _timerList[i].Increment();
+            v.Increment();
         }
 
         if (_audienceChanged) _audienceChangeMode.Increment();
@@ -202,7 +301,7 @@ public class AudienceController : Singleton<AudienceController>
 
     internal void AddSubs(int subs, bool asReward)
     {
-        _audienceChangeMode.ChangeTimerMax(subs * 10);
+        //_audienceChangeMode.ChangeTimerMax(subs * 10);
         _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_postSubs;
         _audienceChanged = true;
 
@@ -217,18 +316,37 @@ public class AudienceController : Singleton<AudienceController>
         AddViewers(viewers, ViewerSourceType.Reward);
     }
 
+    internal void SetTimerMax(ShopType type)
+    {
+        switch (type)
+        {
+            case ShopType.HeadpatDelay:
+                _timerDictionary[TimerType.Headpat].DecreaseTimerMax(1);
+                break;
+            case ShopType.DonationDelay:
+                _timerDictionary[TimerType.Donation].DecreaseTimerMax(1);
+                break;
+            case ShopType.SubDelay:
+                _timerDictionary[TimerType.SubGift].DecreaseTimerMax(1);
+                break;
+            case ShopType.HypeTrainDelay:
+                _timerDictionary[TimerType.HypeTrain].DecreaseTimerMax(2);
+                break;
+        }
+    }
+
     Coroutine _viewerAddCoroutine;
     bool _counting;
     private void AddViewers(int viewers, ViewerSourceType source)
     {
-        _audienceChangeMode.ChangeTimerMax(viewers / 5);
+        //_audienceChangeMode.ChangeTimerMax(viewers / 5);
         _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_postRaid;
         _audienceChanged = true;
 
         if (source == ViewerSourceType.Raid)
         {
             _announcement.AddMessage(_dataObject.GetMutualUsername(), "raided!!!");
-        } 
+        }
         else if (source == ViewerSourceType.Reward)
         {
             _announcement.AddMessage("girl_dm_", "invited her friends");

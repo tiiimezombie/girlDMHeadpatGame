@@ -4,33 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BaseShop : MonoBehaviour
+public abstract class BaseShop : MonoBehaviour
 {
     public static Action RefreshButtons;
-    [SerializeField] private Transform _scrollerButtonHolder;
-    [SerializeField] private ShopItemButton _shopButtonPrefab;
+    [SerializeField] protected GameObject _contents;
+    [SerializeField] protected Transform _scrollerButtonHolder;
+    [SerializeField] protected ShopItemButton _shopButtonPrefab;
         
 
-    protected void Start()
+    protected virtual void Start()
     {
-        gameObject.SetActive(false);
+        _contents.SetActive(false);
 
-        foreach (ShopType item in System.Enum.GetValues(typeof(ShopType)))
-        {
-            ShopItemButton a = Instantiate(_shopButtonPrefab, _scrollerButtonHolder);
-            a.Init(item, null);
-        }
+        //foreach (ShopType item in System.Enum.GetValues(typeof(ShopType)))
+        //{
+        //    ShopItemButton a = Instantiate(_shopButtonPrefab, _scrollerButtonHolder);
+        //    a.Init(item, null);
+        //}
     }
 
     public void Toggle()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        bool a = !_contents.activeSelf;
+
+        _contents.SetActive(a);
+        if (a) RefreshShopButtons();
+        
         EventSystem.current.SetSelectedGameObject(null);
     }
 
+    protected abstract void RefreshShopButtons();
+
     public void Close()
     {
-        gameObject.SetActive(false);
+        _contents.SetActive(false);
     }
 
     //private void BuyItem(ShopType type)
