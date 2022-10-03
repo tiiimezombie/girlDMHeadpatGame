@@ -15,6 +15,7 @@ using UnityEditor;
 
 [CustomPropertyDrawer(typeof(ShopDictionary))]
 [CustomPropertyDrawer(typeof(MilestoneDictionary))]
+[CustomPropertyDrawer(typeof(PanelTimerDictionary))]
 
 [CustomPropertyDrawer(typeof(ThemeColorDictionary))]
 

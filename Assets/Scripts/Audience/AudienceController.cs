@@ -174,6 +174,12 @@ public class AudienceController : Singleton<AudienceController>
 
     #region -- TimeUp --
 
+    public void IncreaseViewerCap(long value)
+    {
+        Debug.Log(value);
+    }
+
+
     private void HeadPatTimeUp()
     {
         HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier);

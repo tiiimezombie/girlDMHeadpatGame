@@ -63,6 +63,29 @@ public class CurrencyController : Singleton<CurrencyController>
 
     #endregion
 
+    #region -- Favor --
+
+    public double Favor;
+
+    public void AddFavor(double favor)
+    {
+        Favor += favor;
+    }
+
+    public void AddFavor(ShopType type)
+    {
+        if (type == ShopType.ChatXPValue)
+        {
+            XP += ShopLibrary.ShopDictionary[type].Tier;
+        }
+        else if (type == ShopType.RedeemXPValue)
+        {
+            XP += ShopLibrary.ShopDictionary[type].Tier;
+        }
+    }
+
+    #endregion
+
     public static Action RefreshShopButtons;
     public ShopScriptableObject ShopLibrary;
 

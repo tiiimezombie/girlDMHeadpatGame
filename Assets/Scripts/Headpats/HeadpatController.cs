@@ -11,7 +11,7 @@ public class HeadpatController : Singleton<HeadpatController>
 
     private MilestoneController _milestoneController;
 
-    public double PatsRedeemed
+    public long PatsRedeemed
     {
         get => _patsRedeemed;
         set
@@ -20,9 +20,9 @@ public class HeadpatController : Singleton<HeadpatController>
             _patsRedeemedText.text = GameController.GetPrettyDouble(_patsRedeemed); // _patsRedeemed.ToString("N0");
         }
     }
-    private double _patsRedeemed = 0;
+    private long _patsRedeemed = 0;
 
-    public double PatsQueued
+    public long PatsQueued
     {
         get => _patsQueued;
         private set
@@ -31,7 +31,7 @@ public class HeadpatController : Singleton<HeadpatController>
             _patsQueuedText.text = GameController.GetPrettyDouble(_patsQueued); //_patsQueued.ToString("N0");
         }
     }
-    private double _patsQueued;
+    private long _patsQueued;
 
     protected override void Awake()
     {
@@ -50,16 +50,18 @@ public class HeadpatController : Singleton<HeadpatController>
         PatsQueued += number;
     }
 
-    public double HeadPatRemainder(double combo, int numHeadPatsToCheck)
+    public long HeadPatRemainder(long combo, int numHeadPatsToCheck)
     {
         if (combo + numHeadPatsToCheck <= PatsQueued) return numHeadPatsToCheck;
         return PatsQueued - combo;
     }
 
-    public void FulfillHeadpats(double number)
+    public void FulfillHeadpats(long number)
     {
         PatsQueued -= number;
 
-        DOTween.To(() => PatsRedeemed, x => PatsRedeemed = x, PatsRedeemed + number, 1).OnComplete(()=> { _milestoneController.CheckForMilestone(PatsRedeemed); });
+        DOTween.To(() => PatsRedeemed, x => PatsRedeemed = x, PatsRedeemed + number, 1).OnComplete(()=> {
+            _milestoneController.CheckForMilestone(PatsRedeemed); 
+        });
     }
 }

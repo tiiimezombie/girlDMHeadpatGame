@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : Singleton<GameController>
 {
+    public static bool IsPlaying;
+
     public static T GetItemFromArray<T>(T[] array)
     {
         return array[Random.Range(0, array.Length)];

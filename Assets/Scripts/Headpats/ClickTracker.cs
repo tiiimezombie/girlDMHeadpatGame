@@ -9,7 +9,7 @@ public class ClickTracker : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _comboText;
 
-    private double ComboCount
+    private long ComboCount
     {
         get => _comboCount;
         set
@@ -24,7 +24,7 @@ public class ClickTracker : MonoBehaviour
             _comboText.text = _comboCount <= 0 ? string.Empty : _comboCount.ToString("N0");
         }
     }
-    private double _comboCount = 0;
+    private long _comboCount = 0;
 
     private float _comboTimeout = 2;
     private float _comboTimer;
@@ -54,7 +54,7 @@ public class ClickTracker : MonoBehaviour
     public void ClickDM()
     {
         //Debug.Log("pat");
-        double increase = 0;
+        long increase = 0;
 
         if (Random.Range(0, 20) < 1) // 5%
         {

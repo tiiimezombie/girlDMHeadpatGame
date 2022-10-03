@@ -17,16 +17,34 @@ public class TimerPanel : MonoBehaviour
     [SerializeField] private Button _moneyUpgradeButton;
     [SerializeField] private TextMeshProUGUI _moneyUpgradeButtonText;
 
-    public void Setup(string name)
+    private TimerType _timerType;
+
+    private void Awake()
     {
+        TimerController.SetPanelView += SetView;
+    }
+
+    private void OnDestroy()
+    {
+        TimerController.SetPanelView -= SetView;
+    }
+
+    public void Setup(TimerType timerType, string name, bool canPayXP, string xpCost, bool canPayMoney, string moneyCost)
+    {
+        _timerType = timerType;
         _viewOneHolderGO.SetActive(true);
         _viewTwoHolderGO.SetActive(false);
         _titleText.text = name;
+
+        _xpUpgradeButton.interactable = canPayXP;
+        _xpUpgradeButtonText.text = xpCost;
+        _moneyUpgradeButton.interactable = canPayMoney;
+        _moneyUpgradeButtonText.text = moneyCost;
     }
 
-    public void DoUpdate()
+    public void SetProgress(float progress)
     {
-
+        _progressBar.fillAmount = Mathf.Clamp(progress, 0, 1);
     }
 
     public void SetView(int viewIndex)
@@ -42,5 +60,20 @@ public class TimerPanel : MonoBehaviour
         {
             _viewOneHolderGO.SetActive(true);
         }
+    }
+
+    public void ActionButton()
+    {
+        TimerController.Instance.PanelActionButtonClicked(_timerType);
+    }
+
+    public void BuyMultiplierUpgrade()
+    {
+        TimerController.Instance.PanelMultiplierUpgradeRequested(_timerType);
+    }
+
+    public void BuySpeedUpgrade()
+    {
+        TimerController.Instance.PanelSpeedUpgradeRequested(_timerType);
     }
 }

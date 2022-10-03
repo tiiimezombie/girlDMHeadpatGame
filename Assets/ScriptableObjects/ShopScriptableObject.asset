@@ -101,3 +101,24 @@ MonoBehaviour:
       Currency: 0
       Tier: 0
       BaseCost: 0
+  TimerDictionary:
+    m_keys: 03000000
+    m_values:
+    - Name: Headpat
+      TimerType: 3
+      RefreshType: 0
+      InitialDuration: 16
+      InitialReturnValue: 1
+      ReturnCurrency: 4
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 2
+        NewDuration: 4
+      - Cost: 4
+        NewDuration: 2
+      - Cost: 8
+        NewDuration: 1
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
