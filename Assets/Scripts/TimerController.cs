@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TimerController : MonoBehaviour
 {
+    [SerializeField] private BaseTimer[] _timers;
     [SerializeField] private TimerPanel[] _timerArray;
     private bool _upgradeMode;
 
@@ -28,4 +29,18 @@ public class TimerController : MonoBehaviour
             v.SetView(_upgradeMode ? 2 : 1);
         }
     }
+}
+
+public class Timer
+{
+    public string Name;
+    
+    public float Duration;
+    public float CurrentTime;
+
+    public int InitialMultiplierTier = 1;
+    public int InitialMultiplierUpgradeCost;
+
+    public int InitialSpeedTier = 1;
+    public int dsfsd;
 }

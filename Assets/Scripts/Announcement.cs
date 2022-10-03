@@ -18,10 +18,6 @@ public class Announcement : MonoBehaviour
     void Start()
     {
         _baseRT.anchoredPosition = new Vector2(0, 300);
-
-        //AddMessage("xxzczzx", "gifted 5 subs");
-        //AddMessage("erwer", "gifted 5 subs");
-        //AddMessage("sdfsdf", "gifted 5 subs");
     }
 
     public void AddMessage(string username, string thing)
