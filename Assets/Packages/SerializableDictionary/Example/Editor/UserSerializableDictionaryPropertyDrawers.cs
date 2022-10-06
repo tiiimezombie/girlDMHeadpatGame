@@ -13,8 +13,8 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(AudienceRedeemPreferenceDictionary))]
 [CustomPropertyDrawer(typeof(AudienceChatPreferenceDictionary))]
 
-[CustomPropertyDrawer(typeof(ShopDictionary))]
-[CustomPropertyDrawer(typeof(MilestoneDictionary))]
+//[CustomPropertyDrawer(typeof(ShopDictionary))]
+//[CustomPropertyDrawer(typeof(MilestoneDictionary))]
 [CustomPropertyDrawer(typeof(PanelTimerDictionary))]
 
 [CustomPropertyDrawer(typeof(ThemeColorDictionary))]

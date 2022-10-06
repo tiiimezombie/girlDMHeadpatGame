@@ -26,6 +26,8 @@ public class ClickTracker : MonoBehaviour
     }
     private long _comboCount = 0;
 
+    private long _bonusClicks;
+
     private float _comboTimeout = 2;
     private float _comboTimer;
     private bool _comboActive;
@@ -46,7 +48,7 @@ public class ClickTracker : MonoBehaviour
                 _comboActive = false;
                 var finalCombo = ComboCount;
                 ComboCount = 0;
-                HeadpatController.Instance.FulfillHeadpats(finalCombo);
+                CurrencyController.Instance.FulfillHeadpats(finalCombo);
             }
         }
     }
@@ -58,19 +60,23 @@ public class ClickTracker : MonoBehaviour
 
         if (Random.Range(0, 20) < 1) // 5%
         {
-            increase = HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier + (int)System.Math.Pow(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickCritValue].Tier, 2));
+            _bonusClicks += 5;
+            //increase = HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier + (int)System.Math.Pow(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickCritValue].Tier, 2));
             Debug.Log("CRIT");
         }
-        else
-        {
-            increase = HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier);
-        }
+        //else
+        //{
+        //    //increase = HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier);
+        //}
+
+        increase = CurrencyController.Instance.HeadPatRemainder(ComboCount, 1 + _bonusClicks);
+        _bonusClicks = 0;
 
         if (increase == 0) return;
         ComboCount += increase;
 
         _comboTween.Kill();
-        _comboText.transform.localScale = Vector3.one;
+        _comboText.transform.localScale = Vector3.one * (ComboCount/100 + 1);
         _comboTween = _comboText.transform.DOPunchScale(new Vector3(1.4f, 1.4f, 1), 0.3f, 1);
     }
 }

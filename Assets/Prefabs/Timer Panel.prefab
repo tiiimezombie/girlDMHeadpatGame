@@ -758,7 +758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.9999962, y: 1}
   m_SizeDelta: {x: -2, y: -2}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &2125560439408134370
@@ -1187,7 +1187,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 42}
+  m_SizeDelta: {x: 180.59, y: 42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8028553462665837958
 CanvasRenderer:
@@ -1238,13 +1238,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d57d6809b994c4da58ae86b6762f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _titleText: {fileID: 0}
-  _viewOneHolderGO: {fileID: 0}
-  _progressBar: {fileID: 0}
-  _claimButton: {fileID: 0}
-  _claimButtonText: {fileID: 0}
-  _viewTwoHolderGO: {fileID: 0}
-  _xpUpgradeButton: {fileID: 0}
-  _xpUpgradeButtonText: {fileID: 0}
-  _moneyUpgradeButton: {fileID: 0}
-  _moneyUpgradeButtonText: {fileID: 0}
+  _titleText: {fileID: 7159806109842513553}
+  _viewOneHolderGO: {fileID: 6039807255399182719}
+  _progressBar: {fileID: 5735689662301977869}
+  _claimButton: {fileID: 4286497719099966561}
+  _claimButtonText: {fileID: 4764933360117642407}
+  _viewTwoHolderGO: {fileID: 1394741825518451761}
+  _xpUpgradeButton: {fileID: 7994491070080081633}
+  _xpUpgradeButtonText: {fileID: 6905133512289679723}
+  _moneyUpgradeButton: {fileID: 1969579296631916975}
+  _moneyUpgradeButtonText: {fileID: 2711957134911749427}

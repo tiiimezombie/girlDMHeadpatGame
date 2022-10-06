@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TimerController : Singleton<TimerController>
+public class ShopTimerController : Singleton<ShopTimerController>
 {
     public static event Action<int> SetPanelView;
 
@@ -11,30 +11,12 @@ public class TimerController : Singleton<TimerController>
     [SerializeField] private TimerPanel _timerPanelPrefab;
     [SerializeField] private Transform _timerHolder;
     private Dictionary<TimerType, TimerWithPanel> _panelTimerDictionary = new Dictionary<TimerType, TimerWithPanel>();
-    private SpecialTimer _bonusChestTimer;
 
-
-    
     private bool _upgradeMode;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        _bonusChestTimer = new SpecialTimer()
-        {
-            TimerType = TimerType.BonusChest,
-            RefreshType = TimerRefreshType.NeedToClaim,
-            CurrentDuration = 60 * 5,
-        };
-        _bonusChestTimer.Setup(GiveBonus);
-
         MakeTimer(TimerType.Headpat);
-    }
-
-    private void GiveBonus()
-    {
-        Debug.Log("dskfljsdklfdssdf");
     }
 
     private void MakeTimer(TimerType type)
@@ -42,7 +24,7 @@ public class TimerController : Singleton<TimerController>
         if (_panelTimerDictionary.ContainsKey(type)) return;
 
         var a = Instantiate(_timerPanelPrefab, _timerHolder);
-        _panelTimerDictionary.Add(TimerType.Headpat, _timerScriptableObject.TimerDictionary[type]);
+        _panelTimerDictionary.Add(TimerType.Headpat, _timerScriptableObject.ShopDictionary[type]);
         _panelTimerDictionary[type].Setup(a);
     }
 
@@ -54,8 +36,6 @@ public class TimerController : Singleton<TimerController>
         {
             v.Increment();
         }
-
-        _bonusChestTimer.Increment(Time.deltaTime);
     }
 
     public void ToggleUpgradeMode()
@@ -68,6 +48,9 @@ public class TimerController : Singleton<TimerController>
     {
         switch (timerType)
         {
+            case CurrencyType.Headpats:
+                CurrencyController.Instance.AddHeadpats(AudienceController.Instance.HeadPatsFromAudience);
+                break;
             case CurrencyType.Money:
                 CurrencyController.Instance.AddMoney(value);
                 break;
@@ -75,10 +58,13 @@ public class TimerController : Singleton<TimerController>
                 CurrencyController.Instance.AddXP(value);
                 break;
             case CurrencyType.Favor:
-                CurrencyController.Instance.AddFavor(value);
+                AudienceController.Instance.AddFavor(value);
                 break;
             case CurrencyType.ViewerCap:
                 AudienceController.Instance.IncreaseViewerCap(value);
+                break;
+            default:
+                Debug.Log(timerType.ToString());
                 break;
         }
     }

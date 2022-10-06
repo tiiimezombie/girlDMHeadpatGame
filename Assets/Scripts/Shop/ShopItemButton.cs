@@ -11,30 +11,34 @@ public class ShopItemButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private Image _image;
     [SerializeField] private TextMeshProUGUI _value;
-    private ShopType _type;
-    private BaseShop _parentShop;
+    private TimerType _type;
+    private RedeemShop _parentShop;
     private Action _onClick;
 
-    public void Init(ShopType item, BaseShop parentShop)
+    private int _cost;
+    private CurrencyType _currency;
+
+    public void Init(TimerType item, RedeemShop parentShop, string name, Sprite icon, CurrencyType costCurrency, int cost)
     {
-        BaseShop.RefreshButtons += Refresh;
+        //BaseShop.RefreshButtons += Refresh;
         _type = item;
         _parentShop = parentShop;
-        _name.text = CurrencyController.Instance.ShopLibrary.ShopDictionary[_type].Name;
-        _image.sprite = CurrencyController.Instance.ShopLibrary.ShopDictionary[_type].Sprite;
-        _value.text = CurrencyController.Instance.ShopLibrary.ShopDictionary[_type].GetCostText();
-        Refresh();
+        _name.text = name;
+        _image.sprite = icon;
+        _cost = cost;
+        _currency = costCurrency;
+        //Refresh();
     }
 
     public void OnClick()
     {
-        CurrencyController.Instance.BuyShopItem(_type);
+        _parentShop.BuyTimer(_type);
         //_onClick?.Invoke();
     }
 
-    public void Refresh()
+    public void Refresh(bool purchaseable, string priceText)
     {
-        _value.text = CurrencyController.Instance.ShopLibrary.ShopDictionary[_type].GetCostText();
-        _button.interactable = CurrencyController.Instance.CanBuyShopItem(_type);
+        _value.text = priceText;//CurrencyController.Instance.ShopLibrary.ShopDictionary[_type].GetCostText();
+        _button.interactable = purchaseable;
     }
 }

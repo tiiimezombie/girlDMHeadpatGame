@@ -21,12 +21,12 @@ public class TimerPanel : MonoBehaviour
 
     private void Awake()
     {
-        TimerController.SetPanelView += SetView;
+        ShopTimerController.SetPanelView += SetView;
     }
 
     private void OnDestroy()
     {
-        TimerController.SetPanelView -= SetView;
+        ShopTimerController.SetPanelView -= SetView;
     }
 
     public void Setup(TimerType timerType, string name, bool canPayXP, string xpCost, bool canPayMoney, string moneyCost)
@@ -64,16 +64,16 @@ public class TimerPanel : MonoBehaviour
 
     public void ActionButton()
     {
-        TimerController.Instance.PanelActionButtonClicked(_timerType);
+        ShopTimerController.Instance.PanelActionButtonClicked(_timerType);
     }
 
     public void BuyMultiplierUpgrade()
     {
-        TimerController.Instance.PanelMultiplierUpgradeRequested(_timerType);
+        ShopTimerController.Instance.PanelMultiplierUpgradeRequested(_timerType);
     }
 
     public void BuySpeedUpgrade()
     {
-        TimerController.Instance.PanelSpeedUpgradeRequested(_timerType);
+        ShopTimerController.Instance.PanelSpeedUpgradeRequested(_timerType);
     }
 }

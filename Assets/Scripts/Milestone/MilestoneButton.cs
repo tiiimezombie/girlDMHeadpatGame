@@ -11,11 +11,11 @@ public class MilestoneButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rewardText;
     private event Action _clickAction;
 
-    public void Setup(MilestoneReward reward)
+    public void Setup()//(MilestoneReward reward)
     {
-        _nameText.text = reward.Name;
-        _rewardText.text = reward.Icon;
-        _clickAction = reward.Action;
+        //_nameText.text = reward.Name;
+        //_rewardText.text = reward.Icon;
+        //_clickAction = reward.Action;
     }
 
     public void OnClick()

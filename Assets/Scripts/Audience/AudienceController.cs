@@ -49,7 +49,15 @@ public class AudienceController : Singleton<AudienceController>
         0, 8, 4, 2,
     };
 
-    public double ViewerCount
+    public long HeadPatsFromAudience
+    {
+        get
+        {
+            return 1 + ViewerCount / 10;
+        }
+    }
+
+    public long ViewerCount
     {
         get => _viewerCount;
         set
@@ -59,75 +67,39 @@ public class AudienceController : Singleton<AudienceController>
             _viewerCountText.text = "<sprite name=\"viewerIcon\"> " + _viewerCount.ToString("N0");
         }
     }
-    private double _viewerCount;
-    private double _realViewerCount;
-    private double _subCount;
+    private long _viewerCount;
+    private long _realViewerCount;
 
-    private double _headPatterCount;
-    private double _chatterCount;
-    private double _redeemerCount;
-    private double _donatorCount;
-    private double _gifterCount;
-    private double _lurkerCount;
+    private SpecialTimer _chatMessage;
+    private SpecialTimer _gift;
+    private SpecialTimer _raid;
 
-    // Timers
-    private class Timer
-    {
-        private event Action TimedAction;
-        private float TimerMax = 5;
-        private float _timer;
+    //private double _subCount;
 
-        public Timer(Action action, int max)
-        {
-            TimedAction = action;
-            TimerMax = max;
-        }
-
-        public void Increment()
-        {
-            _timer += Time.deltaTime;
-
-            if (_timer >= TimerMax)
-            {
-                TimedAction?.Invoke();
-                _timer = 0;
-            }
-        }
-
-        public void ChangeTimerMax(int max)
-        {
-            TimerMax = max;
-            _timer = 0;
-        }
-
-        public void DecreaseTimerMax(int decrease)
-        {
-            TimerMax -= decrease;
-            if (TimerMax < 1) TimerMax = 1;
-            _timer = 0;
-        }
-    }
-
-    private Dictionary<TimerType, Timer> _timerDictionary = new Dictionary<TimerType, Timer>();
+    //private double _headPatterCount;
+    //private double _chatterCount;
+    //private double _redeemerCount;
+    //private double _donatorCount;
+    //private double _gifterCount;
+    //private double _lurkerCount;
 
     //private List<Timer> _timerList;
-    private Timer _audienceChangeMode;
     private bool _audienceChanged;
 
-    private enum TimerType
-    {
-        Headpat,
-        Chat,
-        Redemption,
-        Donation,
-        SubGift,
-        SubMonthEnd,
+    //private enum TimerType
+    //{
+    //    Headpat,
+    //    Chat,
+    //    Redemption,
+    //    Donation,
+    //    SubGift,
+    //    SubMonthEnd,
 
-        ViewerCount,
-        Partnerships,
-        HypeTrain,
-        RandomEvent
-    }
+    //    ViewerCount,
+    //    Partnerships,
+    //    HypeTrain,
+    //    RandomEvent
+    //}
 
     private enum RandomEventType
     {
@@ -151,42 +123,37 @@ public class AudienceController : Singleton<AudienceController>
         // Audience controller has a list of events that happen regularly
         // When they occur, they change values, notify various UI systems, and set the timer
         // TODO some way to track which timer needs to happen faster when the shop item is bought :/
-        _timerDictionary.Add(TimerType.Headpat, new Timer(() => { HeadPatTimeUp(); }, 8));
-        _timerDictionary.Add(TimerType.Chat, new Timer(() => { ChatTimeUp(); }, 8));
-        _timerDictionary.Add(TimerType.Redemption, new Timer(() => { RedemptionTimeUp(); }, 24));
-        _timerDictionary.Add(TimerType.Donation, new Timer(() => { DonationTimeUp(); }, 30));
-        _timerDictionary.Add(TimerType.SubGift, new Timer(() => { SubGiftTimeUp(); }, 45));
-        _timerDictionary.Add(TimerType.SubMonthEnd, new Timer(() => { SubMonthEndTimeUp(); }, 120));
+        //_timerDictionary.Add(TimerType.Headpat, new Timer(() => { HeadPatTimeUp(); }, 8));
+        // _timerDictionary.Add(TimerType.Chat, new Timer(() => { ChatTimeUp(); }, 8));
+        //_timerDictionary.Add(TimerType.Redemption, new Timer(() => { RedemptionTimeUp(); }, 24));
+        //_timerDictionary.Add(TimerType.Donation, new Timer(() => { DonationTimeUp(); }, 30));
+        //_timerDictionary.Add(TimerType.SubGift, new Timer(() => { SubGiftTimeUp(); }, 45));
+        //_timerDictionary.Add(TimerType.SubMonthEnd, new Timer(() => { SubMonthEndTimeUp(); }, 120));
 
-        _timerDictionary.Add(TimerType.ViewerCount, new Timer(() => { ViewerCountTimeUp(); }, 10));
-        _timerDictionary.Add(TimerType.Partnerships, new Timer(() => { PartnershipTimeUp(); }, 60));
-        _timerDictionary.Add(TimerType.HypeTrain, new Timer(() => { HypeTrainTimeUp(); }, 90));
+        //_timerDictionary.Add(TimerType.ViewerCount, new Timer(() => { ViewerCountTimeUp(); }, 10));
+        //_timerDictionary.Add(TimerType.Partnerships, new Timer(() => { PartnershipTimeUp(); }, 60));
+        //_timerDictionary.Add(TimerType.HypeTrain, new Timer(() => { HypeTrainTimeUp(); }, 90));
         // random event?
 
-        _audienceChangeMode = new Timer(() => { _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard; }, 0);
+        //_audienceChangeMode = new Timer(() => { _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard; }, 0);
 
-        _realViewerCount = 25;
+        _realViewerCount = 5;
         ViewerCount = _realViewerCount;
         _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard;
 
-        _playing = true;
+        // 
+        //_chatMessage = new SpecialTimer()
+        //{
+        //    TimerType = TimerType.Chat,
+        //    RefreshType = TimerRefreshType.NeedToClaim,
+        //    CurrentDuration = 60 * 5,
+        //};
+        //_chatMessage.Setup(GiveBonus);
     }
 
     #region -- TimeUp --
 
-    public void IncreaseViewerCap(long value)
-    {
-        Debug.Log(value);
-    }
-
-
-    private void HeadPatTimeUp()
-    {
-        HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier);
-        _redeemFeed.AddEntry("Headpat fan 100", _dataObject.GetRedeem(RedeemType.Headpat), true);
-    }
-
-    private void ChatTimeUp()
+    private void DoChat()
     {
         // it's either flat rate of x% for xp generation
         // or based on recent raid/ % audience composition
@@ -198,6 +165,24 @@ public class AudienceController : Singleton<AudienceController>
         _chatFeed.AddEntry(chat, _dataObject.GetAudienceUsername(viewer), _dataObject.GetChat(chat));
     }
 
+    public void IncreaseViewerCap(long value)
+    {
+        Debug.Log("add viewer cap " + value);
+    }
+
+    public void AddFavor(long value)
+    {
+        Debug.Log("favor " + value);
+    }
+
+    //private void HeadPatTimeUp()
+    //{
+    //    HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier);
+    //    _redeemFeed.AddEntry("Headpat fan 100", _dataObject.GetRedeem(RedeemType.Headpat), true);
+    //}
+
+
+
     private void RedemptionTimeUp()
     {
         // Redeem percent array
@@ -208,79 +193,79 @@ public class AudienceController : Singleton<AudienceController>
         _redeemFeed.AddEntry(_dataObject.GetAudienceUsername(viewer), _dataObject.GetRedeem(redeemType));
     }
 
-    private void DonationTimeUp()
-    {
-        if (_realViewerCount < 64) return;
+    //private void DonationTimeUp()
+    //{
+    //    if (_realViewerCount < 64) return;
 
-        // normal bits, 1.5x bits, 2x bits, $1
-        int[] aa = { 15, 5, 1 };
-        int[] multiplierArray = { 1, 2, 5 };
+    //    // normal bits, 1.5x bits, 2x bits, $1
+    //    int[] aa = { 15, 5, 1 };
+    //    int[] multiplierArray = { 1, 2, 5 };
 
-        int generosityIndex = GameController.GetWeightedRandomFromArray(aa);
-        int multiplier = multiplierArray[generosityIndex];
+    //    int generosityIndex = GameController.GetWeightedRandomFromArray(aa);
+    //    int multiplier = multiplierArray[generosityIndex];
 
-        int donation = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.DonationValue].Tier * multiplier;
+    //    int donation = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.DonationValue].Tier * multiplier;
 
-        // or set generosity
-        if (Random.Range(0, 10) < 3)
-        {
-            // dollars
-            CurrencyController.Instance.AddMoney(donation);
-            _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "donated $" + donation);
-        }
-        else
-        {
-            // bits
-            CurrencyController.Instance.AddMoney(donation);
-            _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "threw coins x" + (donation * 100));
-        }
-    }
+    //    // or set generosity
+    //    if (Random.Range(0, 10) < 3)
+    //    {
+    //        // dollars
+    //        CurrencyController.Instance.AddMoney(donation);
+    //        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "donated $" + donation);
+    //    }
+    //    else
+    //    {
+    //        // bits
+    //        CurrencyController.Instance.AddMoney(donation);
+    //        _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "threw coins x" + (donation * 100));
+    //    }
+    //}
 
-    private void SubGiftTimeUp()
-    {
-        if (_realViewerCount < 32) return;
+    //private void SubGiftTimeUp()
+    //{
+    //    if (_realViewerCount < 32) return;
 
-        int subs =
-            CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.DonationValue].Tier *
-            GameController.GetWeightedRandomFromArray(_generosityPercentArray);
+    //    int subs =
+    //        CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.DonationValue].Tier *
+    //        GameController.GetWeightedRandomFromArray(_generosityPercentArray);
 
-        if (CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.SubDiscount].Tier > 0)
-            subs *= CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.SubDiscount].Tier;
+    //    if (CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.SubDiscount].Tier > 0)
+    //        subs *= CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.SubDiscount].Tier;
 
-        _subCount += subs;
+    //    _subCount += subs;
 
-        AddSubs(subs, false);
-    }
+    //    AddSubs(subs, false);
+    //}
 
-    private void SubMonthEndTimeUp()
-    {
-        _announcement.AddMessage("Sub Renewal", GameController.GetPrettyDouble(_subCount) + " sub(s)");
+    //private void SubMonthEndTimeUp()
+    //{
+    //    _announcement.AddMessage("Sub Renewal", GameController.GetPrettyLong(_subCount) + " sub(s)");
 
-        CurrencyController.Instance.AddMoney(_subCount);
-    }
+    //    CurrencyController.Instance.AddMoney(_subCount);
+    //}
 
-    private void ViewerCountTimeUp()
-    {
-        if (Random.Range(0, 10) < 3 && CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.RaidValue].Tier > 0)
-        {
-            int newViewers =
-                GameController.GetWeightedRandomFromArray(_generosityPercentArray) *
-                CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.RaidValue].Tier *
-                25;
-            if (newViewers > 0) AddViewers(newViewers, ViewerSourceType.Raid);
-        }
-        else
-        {
-            // var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
-            AddViewers(
-                (int) Math.Pow(Random.Range(-5, 10), CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Socials].Tier),
-                ViewerSourceType.Normal);
-        }
-    }
+    //private void ViewerCountTimeUp()
+    //{
+    //    if (Random.Range(0, 10) < 3 && CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.RaidValue].Tier > 0)
+    //    {
+    //        int newViewers =
+    //            GameController.GetWeightedRandomFromArray(_generosityPercentArray) *
+    //            CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.RaidValue].Tier *
+    //            25;
+    //        if (newViewers > 0) AddViewers(newViewers, ViewerSourceType.Raid);
+    //    }
+    //    else
+    //    {
+    //        // var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
+    //        //AddViewers(
+    //        //    (int) Math.Pow(Random.Range(-5, 10), CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Socials].Tier),
+    //        //    ViewerSourceType.Normal);
+    //    }
+    //}
 
     private void PartnershipTimeUp()
     {
-        CurrencyController.Instance.AddMoney(CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Partnerships].Tier);
+        //CurrencyController.Instance.AddMoney(CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Partnerships].Tier);
     }
 
     private void HypeTrainTimeUp()
@@ -297,12 +282,12 @@ public class AudienceController : Singleton<AudienceController>
     {
         if (!_playing) return;
 
-        foreach (var v in _timerDictionary.Values)
-        {
-            v.Increment();
-        }
+        //foreach (var v in _timerDictionary.Values)
+        //{
+        //    v.Increment();
+        //}
 
-        if (_audienceChanged) _audienceChangeMode.Increment();
+        //if (_audienceChanged) _audienceChangeMode.Increment();
     }
 
     internal void AddSubs(int subs, bool asReward)
@@ -322,24 +307,24 @@ public class AudienceController : Singleton<AudienceController>
         AddViewers(viewers, ViewerSourceType.Reward);
     }
 
-    internal void SetTimerMax(ShopType type)
-    {
-        switch (type)
-        {
-            case ShopType.HeadpatDelay:
-                _timerDictionary[TimerType.Headpat].DecreaseTimerMax(1);
-                break;
-            case ShopType.DonationDelay:
-                _timerDictionary[TimerType.Donation].DecreaseTimerMax(1);
-                break;
-            case ShopType.SubDelay:
-                _timerDictionary[TimerType.SubGift].DecreaseTimerMax(1);
-                break;
-            case ShopType.HypeTrainDelay:
-                _timerDictionary[TimerType.HypeTrain].DecreaseTimerMax(2);
-                break;
-        }
-    }
+    //internal void SetTimerMax(ShopType type)
+    //{
+    //    switch (type)
+    //    {
+    //        case ShopType.HeadpatDelay:
+    //            _timerDictionary[TimerType.Headpat].DecreaseTimerMax(1);
+    //            break;
+    //        case ShopType.DonationDelay:
+    //            _timerDictionary[TimerType.Donation].DecreaseTimerMax(1);
+    //            break;
+    //        case ShopType.SubDelay:
+    //            _timerDictionary[TimerType.SubGift].DecreaseTimerMax(1);
+    //            break;
+    //        case ShopType.HypeTrainDelay:
+    //            _timerDictionary[TimerType.HypeTrain].DecreaseTimerMax(2);
+    //            break;
+    //    }
+    //}
 
     Coroutine _viewerAddCoroutine;
     bool _counting;
@@ -371,7 +356,7 @@ public class AudienceController : Singleton<AudienceController>
     {
         var a = _realViewerCount - _viewerCount;
         a /= 10;
-        a = Math.Round(a);
+        //a = Math.Round(a);
         var remainder = (_realViewerCount - _viewerCount) - (a * 10);
 
         _viewerCount += remainder;

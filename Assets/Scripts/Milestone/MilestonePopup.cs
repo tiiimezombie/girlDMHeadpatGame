@@ -10,7 +10,7 @@ public class MilestonePopup : MonoBehaviour
 
     private CanvasGroup _canvasGroup;
 
-    private List<MilestoneRewardCollection> milestoneCollectionList = new List<MilestoneRewardCollection>();
+    //private List<MilestoneRewardCollection> milestoneCollectionList = new List<MilestoneRewardCollection>();
 
     private void Awake()
     {
@@ -27,22 +27,22 @@ public class MilestonePopup : MonoBehaviour
 
     private void Setup()
     {
-        _milestoneButtons[0].Setup(milestoneCollectionList[0].Reward1);
-        _milestoneButtons[1].Setup(milestoneCollectionList[0].Reward2);
-        _milestoneButtons[2].Setup(milestoneCollectionList[0].Reward3);
+        //_milestoneButtons[0].Setup(milestoneCollectionList[0].Reward1);
+        //_milestoneButtons[1].Setup(milestoneCollectionList[0].Reward2);
+        //_milestoneButtons[2].Setup(milestoneCollectionList[0].Reward3);
     }
 
-    public void AddMilestoneContents(MilestoneRewardCollection collection)
-    {
-        milestoneCollectionList.Add(collection);
-    }
+    //public void AddMilestoneContents(MilestoneRewardCollection collection)
+    //{
+    //    milestoneCollectionList.Add(collection);
+    //}
 
     public void SelectedMilestoneReward()
     {
-        milestoneCollectionList.RemoveAt(0);
+        //milestoneCollectionList.RemoveAt(0);
 
-        if (milestoneCollectionList.Count > 0) Setup();
-        else Close();
+        //if (milestoneCollectionList.Count > 0) Setup();
+        //else Close();
     }
 
     public void Close()

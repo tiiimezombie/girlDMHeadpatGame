@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : Singleton<GameController>
 {
+    public event System.Action<bool> SetPlaying;
     public static bool IsPlaying;
 
     public static T GetItemFromArray<T>(T[] array)
@@ -39,7 +40,7 @@ public class GameController : Singleton<GameController>
         "K", "M", "B", "T", "AA", "BB", "CC", "DD", "EE", "FF"
     };
 
-    public static string GetPrettyDouble(double value)
+    public static string GetPrettyLong(long value)
     {
         var initial = value;
 
@@ -77,4 +78,10 @@ public class GameController : Singleton<GameController>
 
     //    return array[array.Length - 1][0];
     //}
+
+    private void Start()
+    {
+        IsPlaying = true;
+        SetPlaying?.Invoke(IsPlaying);
+    }
 }

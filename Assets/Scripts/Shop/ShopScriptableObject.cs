@@ -19,9 +19,9 @@ public class ShopScriptableObject : ScriptableObject
     }
 #endif
 
-    public ShopDictionary ShopDictionary = new ShopDictionary();
-    public MilestoneDictionary MilestoneDictionary = new MilestoneDictionary();
-    public PanelTimerDictionary TimerDictionary = new PanelTimerDictionary();
+    //public ShopDictionary ShopDictionary = new ShopDictionary();
+    //public MilestoneDictionary MilestoneDictionary = new MilestoneDictionary();
+    public PanelTimerDictionary ShopDictionary = new PanelTimerDictionary();
 }
 
 public enum CurrencyType
@@ -34,66 +34,58 @@ public enum CurrencyType
     ViewerCap
 }
 
-[System.Serializable]
-public class MilestoneDictionary : SerializableDictionary<ShopType, ShopItem> { }
+//[System.Serializable]
+//public class MilestoneDictionary : SerializableDictionary<ShopType, ShopItem> { }
 
 #region -- Shop Items --
-public enum ShopType
-{
-    HeadpatDelay,
-    HeadpatValue,
-    ChatXPValue,
-    DonationDelay,
-    DonationValue,
-    RedeemXPValue,
-    SubDelay,
-    SubValue,
-    ChatCommands,
-    HypeTrainDelay,
-    ClickValue,
-    ClickCritValue,
+//public enum ShopType
+//{
+//    HeadpatDelay,
+//    HeadpatValue,
+//    ChatXPValue,
+//    DonationDelay,
+//    DonationValue,
+//    RedeemXPValue,
+//    SubDelay,
+//    SubValue,
+//    ChatCommands,
+//    HypeTrainDelay,
+//    ClickValue,
+//    ClickCritValue,
 
-    Socials,
-    RaidValue,
-    Partnerships,
-    SubDiscount,
-}
+//    Socials,
+//    RaidValue,
+//    Partnerships,
+//    SubDiscount,
+//}
 
-[System.Serializable]
-public class ShopItem
-{
-    public string Name;
-    public Sprite Sprite;
-    public CurrencyType Currency = CurrencyType.XP;
-    public int Tier = 1;
-    public int BaseCost = 1;
-    //    public int UnlockRequirement;
+//[System.Serializable]
+//public class ShopItem
+//{
+//    public string Name;
+//    public Sprite Sprite;
+//    public CurrencyType Currency = CurrencyType.XP;
+//    public int Tier = 1;
+//    public int BaseCost = 1;
+//    //    public int UnlockRequirement;
 
-    public int FullCost { get => BaseCost * Tier; }
+//    public int FullCost { get => BaseCost * Tier; }
 
-    public void IncrementTier()
-    {
-        Tier++;
-    }
+//    public void IncrementTier()
+//    {
+//        Tier++;
+//    }
 
-    public string GetCostText()
-    {
-        if (Currency == CurrencyType.Money)
-            return "$" + FullCost;
-        else if (Currency == CurrencyType.XP)
-            return "<sprite name=\"viewerIcon\"> " + FullCost;
-        else
-            return FullCost.ToString();
-    }
 
-    public void Reset()
-    {
-        Tier = 1;
-    }
-}
 
-[System.Serializable]
-public class ShopDictionary : SerializableDictionary<ShopType, ShopItem> { }
+//    public void Reset()
+//    {
+//        Tier = 1;
+//    }
+//}
+
+//[System.Serializable]
+//public class ShopDictionary : SerializableDictionary<ShopType, ShopItem> { }
 
 #endregion
 
@@ -194,6 +186,10 @@ public class SpecialTimer : BaseTimer
 public class TimerWithPanel : BaseTimer
 {
     public CurrencyType ReturnCurrency;
+    public Sprite Icon;
+
+    public int InitialCost = 5;
+    public CurrencyType InitialCostCurrency = CurrencyType.XP;
     private TimerPanel _timerPanel;
 
     // Duration
@@ -229,7 +225,7 @@ public class TimerWithPanel : BaseTimer
         CurrentDuration = InitialDuration;
         _skipIncrement = false;
         _timerPanel = panel;
-        _timerPanel.Setup(TimerType, Name, CurrencyController.Instance.XP > CurrentCostToIncreaseMultiplier, GameController.GetPrettyDouble(CurrentCostToIncreaseMultiplier), HasDurationUpgrade && CurrencyController.Instance.Money > CurrentCostToDecreaseDuration, CurrentCostToDecreaseDuration.ToString());
+        _timerPanel.Setup(TimerType, Name, CurrencyController.Instance.XP > CurrentCostToIncreaseMultiplier, GameController.GetPrettyLong(CurrentCostToIncreaseMultiplier), HasDurationUpgrade && CurrencyController.Instance.Money > CurrentCostToDecreaseDuration, CurrentCostToDecreaseDuration.ToString());
     }
 
     public void Increment()
@@ -256,6 +252,16 @@ public class TimerWithPanel : BaseTimer
         }
     }
 
+    public string GetInitialCostShopText()
+    {
+        if (InitialCostCurrency == CurrencyType.Money)
+            return "$" + InitialCost;
+        else if (InitialCostCurrency == CurrencyType.XP)
+            return "<sprite name=\"viewerIcon\"> " + InitialCost;
+        else
+            return InitialCost.ToString();
+    }
+
     public void UpgradeMultiplier()
     {
         CurrentMultiplierLevel++;
@@ -269,7 +275,7 @@ public class TimerWithPanel : BaseTimer
 
     public void Claim()
     {
-        TimerController.Instance.Claim(ReturnCurrency, CurrentValue);
+        ShopTimerController.Instance.Claim(ReturnCurrency, CurrentValue);
     }
 }
 

@@ -28,12 +28,12 @@ public class RedeemFeed : BaseFeed
         _entryArray[_index].transform.SetAsLastSibling();
         if (isHeadpat)
         {
-            int tier = CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier;
+            int tier = 1;// CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier;
             _entryArray[_index].Setup(username + " redeemed " + redeem.Name + " x " + tier + " <sprite name=\"channelPoint\"> " + (redeem.Cost * tier));
         }
         else if (redeem.NeedsInteraction)
         {
-            _entryArray[_index].Setup(username + " redeemed " + redeem.Name + " <sprite name=\"channelPoint\"> " + redeem.Cost, true, (state) => { if (state) CurrencyController.Instance.AddXP(ShopType.RedeemXPValue); });
+            //_entryArray[_index].Setup(username + " redeemed " + redeem.Name + " <sprite name=\"channelPoint\"> " + redeem.Cost, true, (state) => { if (state) CurrencyController.Instance.AddXP(ShopType.RedeemXPValue); });
         }
         else
         {

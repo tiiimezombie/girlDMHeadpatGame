@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public class ChatFeed : BaseFeed
         }
     }
 
-    public void AddEntry (ChatType type, string username, string message)
+    public void AddEntry(ChatType type, string username, string message)
     {
         if (!_showingAllMessages)
         {
@@ -27,13 +28,16 @@ public class ChatFeed : BaseFeed
 
         if (type == ChatType.Complaint)
         {
-            _entryArray[_index].Setup(username, message, string.Empty, true, (state)=> { CurrencyController.Instance.AddXP(ShopType.ChatXPValue); });
+            _entryArray[_index].Setup(username, message, string.Empty, true, (state) =>
+            {
+                CurrencyController.Instance.AddXP(1);
+            });
         }
         else
         {
             _entryArray[_index].Setup(username, message);
-        }        
-        
+        }
+
         _index++;
         _index %= _entryArray.Length;
 

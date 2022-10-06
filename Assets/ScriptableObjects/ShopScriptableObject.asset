@@ -16,109 +16,162 @@ MonoBehaviour:
     m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
     m_values:
     - Name: Headpat Rate
-      Sprite: {fileID: -7421358021936057052, guid: 6b37a37a62d37244d8384dcbca65084b,
-        type: 3}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
     - Name: Headpat Value
-      Sprite: {fileID: 3358780678965872710, guid: 6b37a37a62d37244d8384dcbca65084b,
-        type: 3}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
     - Name: Chat XP Value
-      Sprite: {fileID: -7421358021936057052, guid: 6b37a37a62d37244d8384dcbca65084b,
-        type: 3}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
-    - Name: Donation Rate
-      Sprite: {fileID: 0}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
-    - Name: Donation Value
-      Sprite: {fileID: 0}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
-    - Name: Redeem XP
-      Sprite: {fileID: 0}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
-    - Name: Sub Delay
-      Sprite: {fileID: 0}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
-    - Name: Donation Value
-      Sprite: {fileID: 0}
-      Currency: 1
-      Tier: 1
-      BaseCost: 1
-    - Name: Chat Commands
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 1
-      BaseCost: 1
-    - Name: Donation Value
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 1
-      BaseCost: 1
-    - Name: Donation Value
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 1
-      BaseCost: 1
-    - Name: Click Crit Chance
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 1
-      BaseCost: 1
-  MilestoneDictionary:
-    m_keys: 0c0000000d0000000e0000000f000000
-    m_values:
-    - Name: Socials
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 0
-      BaseCost: 0
-    - Name: Raids
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 0
-      BaseCost: 0
-    - Name: Partners
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 0
-      BaseCost: 0
-    - Name: Discounts
-      Sprite: {fileID: 0}
-      Currency: 0
-      Tier: 0
-      BaseCost: 0
-  TimerDictionary:
-    m_keys: 03000000
-    m_values:
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
     - Name: Headpat
       TimerType: 3
       RefreshType: 0
       InitialDuration: 16
       InitialReturnValue: 1
       ReturnCurrency: 4
+      Icon: {fileID: 0}
+      InitialCost: 1
+      InitialCostCurrency: 1
       DurationUpgradeList:
       - Cost: 1
         NewDuration: 8
       - Cost: 2
         NewDuration: 4
-      - Cost: 4
-        NewDuration: 2
-      - Cost: 8
-        NewDuration: 1
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Donation Value
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Group Pat
+      TimerType: 5
+      RefreshType: 1
+      InitialDuration: 30
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Phrase
+      TimerType: 6
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Donation Value
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Chat Commands
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Donation Value
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Donation Value
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
+      InitalMultiplerLevel: 1
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 2
+    - Name: Click Crit Chance
+      TimerType: 0
+      RefreshType: 0
+      InitialDuration: 50
+      InitialReturnValue: 1
+      ReturnCurrency: 0
+      Icon: {fileID: 0}
+      InitialCost: 5
+      InitialCostCurrency: 1
+      DurationUpgradeList: []
       InitalMultiplerLevel: 1
       MultiplierLevelValue: 1
       MultiplierUpgradeCostPerLevel: 2
