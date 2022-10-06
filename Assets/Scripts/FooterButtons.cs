@@ -20,9 +20,8 @@ public class FooterButtons : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _moneyText;
     [SerializeField] private GameObject _bonusChestButtonGO;
 
-
-    void Update()
+    public void SetBonusChestActive(bool isOn)
     {
-        
+        _bonusChestButtonGO.SetActive(isOn);
     }
 }

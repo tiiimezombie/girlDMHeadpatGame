@@ -14,8 +14,8 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(AudienceChatPreferenceDictionary))]
 
 //[CustomPropertyDrawer(typeof(ShopDictionary))]
-//[CustomPropertyDrawer(typeof(MilestoneDictionary))]
-[CustomPropertyDrawer(typeof(PanelTimerDictionary))]
+[CustomPropertyDrawer(typeof(StaticTimerDictionary))]
+[CustomPropertyDrawer(typeof(UpgradeableTimerDictionary))]
 
 [CustomPropertyDrawer(typeof(ThemeColorDictionary))]
 

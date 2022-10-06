@@ -53,7 +53,7 @@ public class AudienceController : Singleton<AudienceController>
     {
         get
         {
-            return 1 + ViewerCount / 10;
+            return 1 + ViewerCount / 10; // TODO: + random() range, probably
         }
     }
 
@@ -70,9 +70,9 @@ public class AudienceController : Singleton<AudienceController>
     private long _viewerCount;
     private long _realViewerCount;
 
-    private SpecialTimer _chatMessage;
-    private SpecialTimer _gift;
-    private SpecialTimer _raid;
+    private StaticTimerData _chatMessage;
+    private StaticTimerData _gift;
+    private StaticTimerData _raid;
 
     //private double _subCount;
 

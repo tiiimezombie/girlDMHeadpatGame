@@ -5,19 +5,19 @@ using UnityEngine;
 public class BonusTimer : MonoBehaviour
 {
     [SerializeField] private GameObject _bonusButtonGO;
-    private SpecialTimer _bonusChestTimer;
+    private StaticTimer _bonusChestTimer;
 
     void Start()
     {
         _bonusButtonGO.SetActive(false);
 
-        _bonusChestTimer = new SpecialTimer()
+        var a = new StaticTimerData()
         {
             TimerType = TimerType.BonusChest,
             RefreshType = TimerRefreshType.NeedToClaim,
-            CurrentDuration = 60 * 5,
+            InitialDuration = 60 * 5,
         };
-        _bonusChestTimer.Setup(GiveBonus);
+        _bonusChestTimer = new StaticTimer(a, GiveBonus);
     }
 
     void Update()

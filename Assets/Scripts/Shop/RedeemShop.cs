@@ -26,7 +26,7 @@ public class RedeemShop : BaseShop
         foreach (var item in _data.ShopDictionary)
         {
             ShopItemButton a = Instantiate(_shopButtonPrefab, _scrollerButtonHolder);
-            a.Init(item.Key, this, item.Value.Name, item.Value.Icon, item.Value.InitialCostCurrency, item.Value.InitialCost);
+            a.Init(item.Key, this, item.Value.Name, item.Value.Icon); //item.Value.UnlockCurrency, item.Value.UnlockCost
             _shopItemButtons.Add(item.Key, a);
             _purchasedItems.Add(item.Key, PurchaseStateType.Locked);
         }
@@ -43,7 +43,7 @@ public class RedeemShop : BaseShop
 
     public void BuyTimer(TimerType type)
     {
-        if (CurrencyController.Instance.PaidShopCost(_data.ShopDictionary[type].InitialCostCurrency, _data.ShopDictionary[type].InitialCost))
+        if (CurrencyController.Instance.PaidShopCost(_data.ShopDictionary[type].UnlockCurrency, _data.ShopDictionary[type].UnlockCost))
         {
             //_shopItemButtons[type].gameObject.SetActive(false);
             _purchasedItems[type] = PurchaseStateType.Purchased;
@@ -68,7 +68,7 @@ public class RedeemShop : BaseShop
             case PurchaseStateType.Purchased:
                 return "Out of Stock";
             default:
-                return _data.ShopDictionary[type].GetInitialCostShopText();
+                return _data.ShopDictionary[type].GetUnlockCostShopText();
         }
     }
 }

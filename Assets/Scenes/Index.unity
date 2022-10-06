@@ -5432,8 +5432,9 @@ GameObject:
   m_Component:
   - component: {fileID: 572925647}
   - component: {fileID: 572925648}
+  - component: {fileID: 572925649}
   m_Layer: 0
-  m_Name: Money Wallet
+  m_Name: Currency Money Wallet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5470,6 +5471,19 @@ MonoBehaviour:
   _patsRedeemedText: {fileID: 2034475794}
   _milestoneController: {fileID: 322907194}
   _footerButtons: {fileID: 1315916595}
+--- !u!114 &572925649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572925646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e250c727e43bb48bcd2b35566139c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bonusButtonGO: {fileID: 1324876092}
 --- !u!1 &586400231
 GameObject:
   m_ObjectHideFlags: 0

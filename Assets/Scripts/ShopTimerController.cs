@@ -10,7 +10,7 @@ public class ShopTimerController : Singleton<ShopTimerController>
     [SerializeField] private ShopScriptableObject _timerScriptableObject;
     [SerializeField] private TimerPanel _timerPanelPrefab;
     [SerializeField] private Transform _timerHolder;
-    private Dictionary<TimerType, TimerWithPanel> _panelTimerDictionary = new Dictionary<TimerType, TimerWithPanel>();
+    private Dictionary<TimerType, UpgradeableTimer> _panelTimerDictionary = new Dictionary<TimerType, UpgradeableTimer>();
 
     private bool _upgradeMode;
 
@@ -24,8 +24,7 @@ public class ShopTimerController : Singleton<ShopTimerController>
         if (_panelTimerDictionary.ContainsKey(type)) return;
 
         var a = Instantiate(_timerPanelPrefab, _timerHolder);
-        _panelTimerDictionary.Add(TimerType.Headpat, _timerScriptableObject.ShopDictionary[type]);
-        _panelTimerDictionary[type].Setup(a);
+        _panelTimerDictionary.Add(TimerType.Headpat, new UpgradeableTimer(_timerScriptableObject.ShopDictionary[type], a));
     }
 
     void Update()
@@ -69,17 +68,17 @@ public class ShopTimerController : Singleton<ShopTimerController>
         }
     }
 
-    public void PanelActionButtonClicked(TimerType type)
+    public void PanelActionButtonClicked(TimerType timer)
     {
-        if (!_panelTimerDictionary.ContainsKey(type)) return;
+        if (!_panelTimerDictionary.ContainsKey(timer)) return;
 
-        switch (_panelTimerDictionary[type].RefreshType)
+        switch (_panelTimerDictionary[timer].RefreshType)
         {
             case TimerRefreshType.NeedToClaim:
-                _panelTimerDictionary[type].Claim();
+                _panelTimerDictionary[timer].Claim();
                 break;
             case TimerRefreshType.NeedToStart:
-                _panelTimerDictionary[type].Restart();
+                _panelTimerDictionary[timer].Restart();
                 break;
         }
     }

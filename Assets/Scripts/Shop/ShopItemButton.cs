@@ -15,18 +15,18 @@ public class ShopItemButton : MonoBehaviour
     private RedeemShop _parentShop;
     private Action _onClick;
 
-    private int _cost;
-    private CurrencyType _currency;
+    //private int _cost;
+    //private CurrencyType _currency;
 
-    public void Init(TimerType item, RedeemShop parentShop, string name, Sprite icon, CurrencyType costCurrency, int cost)
+    public void Init(TimerType item, RedeemShop parentShop, string name, Sprite icon) //, CurrencyType costCurrency, int cost
     {
         //BaseShop.RefreshButtons += Refresh;
         _type = item;
         _parentShop = parentShop;
         _name.text = name;
         _image.sprite = icon;
-        _cost = cost;
-        _currency = costCurrency;
+        //_cost = cost;
+        //_currency = costCurrency;
         //Refresh();
     }
 

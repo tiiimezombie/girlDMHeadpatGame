@@ -37,10 +37,10 @@ public class MilestoneController : MonoBehaviour
 
     private void DoMilestone(int index)
     {
-        Debug.Log(index);
+        Debug.Log("Milestone " + index + " reached!");
         switch (index)
         {
-            case 1:
+            case 0:
                 CurrencyController.Instance.AddXP(1);
                 _announcement.AddMessage("Milestone Reached!", "+1 xp");
                 break;
@@ -50,7 +50,7 @@ public class MilestoneController : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("zoinks");
+                Debug.Log("zoinks - nothing happened");
                 break;
         }
     }
