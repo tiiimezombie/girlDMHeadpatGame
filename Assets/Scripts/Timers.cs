@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -58,7 +59,7 @@ public class UpgradeableTimer : BaseTimer
 
     public long CurrentValue { get => _data.InitialReturnValue + CurrentMultiplierLevel * _data.MultiplierLevelValue; }
 
-    public long CurrentCostToIncreaseMultiplier { get => CurrentMultiplierLevel * _data.MultiplierUpgradeCostPerLevel; }
+    public int CurrentCostToIncreaseMultiplier { get => (int)Mathf.Pow(_data.MultiplierUpgradeCostPerLevel, CurrentMultiplierLevel); }
 
     public int CurrentCostToDecreaseDuration
     {
@@ -82,13 +83,14 @@ public class UpgradeableTimer : BaseTimer
     {
         _data = data;
 
-        CurrentMultiplierLevel = 1;
+        CurrentMultiplierLevel = 0;
         CurrentDuration = _data.InitialDuration;
         DurationIndex = 0;
         Restart();
 
         _timerPanel = panel;
-        _timerPanel.Setup(_data.TimerType, _data.Name, CurrencyController.Instance.XP > CurrentCostToIncreaseMultiplier, GameController.GetPrettyLong(CurrentCostToIncreaseMultiplier), HasDurationUpgrade && CurrencyController.Instance.Money > CurrentCostToDecreaseDuration, CurrentCostToDecreaseDuration.ToString());
+        _timerPanel.Setup(_data.TimerType, _data.RefreshType, _data.Name);
+        RefreshPanel();
     }
 
     public void Increment()
@@ -102,7 +104,11 @@ public class UpgradeableTimer : BaseTimer
         if (CurrentTime < CurrentDuration) return;
 
         // Claim
-        if (_data.RefreshType == TimerRefreshType.NeedToClaim) return;
+        if (_data.RefreshType == TimerRefreshType.NeedToClaim)
+        {
+            RefreshPanel();
+            return;
+        }
 
         Claim();
 
@@ -118,16 +124,69 @@ public class UpgradeableTimer : BaseTimer
     public void UpgradeMultiplier()
     {
         CurrentMultiplierLevel++;
+        RefreshPanel();
     }
 
     public void UpgradeSpeed()
     {
         DurationIndex++;
         CurrentDuration = _data.DurationUpgradeList[DurationIndex].NewDuration;
+        RefreshPanel();
     }
 
     public void Claim()
     {
         ShopTimerController.Instance.Claim(_data.ReturnCurrency, CurrentValue);
+        RefreshPanel();
     }
+
+    public void RefreshPanel()
+    {
+        _timerPanel.Refresh(CurrencyController.Instance.XP >= CurrentCostToIncreaseMultiplier, CurrentCostToIncreaseMultiplier > 0 ? GameController.GetPrettyLong(CurrentCostToIncreaseMultiplier) : "-", HasDurationUpgrade &&
+            CurrencyController.Instance.Money >= CurrentCostToDecreaseDuration, CurrentCostToDecreaseDuration > 0 ? CurrentCostToDecreaseDuration.ToString() : "-");
+    }
+}
+
+
+public abstract class BaseTimerData
+{
+    public string Name;
+    public TimerRefreshType RefreshType;
+
+    // Duration
+    public int InitialDuration = 50;
+}
+
+public enum UpgradeableTimerType
+{
+    Headpat,
+    CritPat,
+    GroupAidedPat,
+
+    Phrase,
+    Emote,
+    Accessory,
+
+    Merch,
+    Ramen,
+    AdPayout,
+
+    TwitterPost,
+    TiktokVideo,
+    YoutubeVideo,
+}
+
+public enum StaticTimerType
+{
+    Raid,
+    Tier,
+    Gift,
+    BonusChest,
+}
+
+public enum TimerRefreshType
+{
+    AutoRun,
+    NeedToClaim,
+    NeedToStart
 }

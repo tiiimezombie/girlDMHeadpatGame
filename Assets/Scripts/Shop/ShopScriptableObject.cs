@@ -21,7 +21,7 @@ public class ShopScriptableObject : ScriptableObject
 
     //public ShopDictionary ShopDictionary = new ShopDictionary();
     //public MilestoneDictionary MilestoneDictionary = new MilestoneDictionary();
-    public StaticTimerDictionary StaticTimerDictionary = new StaticTimerDictionary();
+    //public StaticTimerDictionary StaticTimerDictionary = new StaticTimerDictionary();
     public UpgradeableTimerDictionary ShopDictionary = new UpgradeableTimerDictionary();
 }
 
@@ -92,60 +92,16 @@ public enum CurrencyType
 
 #region -- Timers --
 
-public enum TimerType
-{
-    Raid,
-    Tier,
-    Gift,
-
-    Headpat,
-    CritPat,
-    GroupAidedPat,
-
-    Phrase,
-    Emote,
-    Accessory,
-
-    Merch,
-    Ramen,
-    AdPayout,
-
-    TwitterPost,
-    TiktokVideo,
-    YoutubeVideo,
-
-    BonusChest,
-}
-
-public enum TimerRefreshType
-{
-    AutoRun,
-    NeedToClaim,
-    NeedToStart
-}
-
-public abstract class BaseTimerData
-{
-    public string Name;
-    public TimerType TimerType;
-    public TimerRefreshType RefreshType;
-
-    // Duration
-    public int InitialDuration = 50;
 
 
-}
 
-[System.Serializable]
-public class StaticTimerData : BaseTimerData
-{
-    private event System.Action OnClaim;    
-}
+
 
 
 [System.Serializable]
 public class UpgradeableTimerData : BaseTimerData
 {
+    public UpgradeableTimerType TimerType { get; protected set; }
     public CurrencyType ReturnCurrency;
     public int InitialReturnValue = 1;
 
@@ -182,9 +138,6 @@ public class TimerDurationUpgade
 }
 
 [System.Serializable]
-public class StaticTimerDictionary : SerializableDictionary<TimerType, StaticTimerData> { }
-
-[System.Serializable]
-public class UpgradeableTimerDictionary : SerializableDictionary<TimerType, UpgradeableTimerData> { }
+public class UpgradeableTimerDictionary : SerializableDictionary<UpgradeableTimerType, UpgradeableTimerData> { }
 
 #endregion

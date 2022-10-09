@@ -120,19 +120,29 @@ public class AudienceController : Singleton<AudienceController>
     {
         _dataObject.Init();
 
+        // TODO:
+        // chat timer
+        // One off, minor donations
+        // representation of hype train
+        // raids
+
+        // obvi, these should be saved to a scriptable object for management
+
+        var a = new StaticTimerData()
+        {
+            //TimerType = TimerType.Raid,
+            RefreshType = TimerRefreshType.NeedToStart,
+            InitialDuration = 60 * 5,
+        };
+        //_bonusChestTimer = new StaticTimer(a, ShowBonusButton);
+
         // Audience controller has a list of events that happen regularly
         // When they occur, they change values, notify various UI systems, and set the timer
         // TODO some way to track which timer needs to happen faster when the shop item is bought :/
-        //_timerDictionary.Add(TimerType.Headpat, new Timer(() => { HeadPatTimeUp(); }, 8));
         // _timerDictionary.Add(TimerType.Chat, new Timer(() => { ChatTimeUp(); }, 8));
-        //_timerDictionary.Add(TimerType.Redemption, new Timer(() => { RedemptionTimeUp(); }, 24));
         //_timerDictionary.Add(TimerType.Donation, new Timer(() => { DonationTimeUp(); }, 30));
         //_timerDictionary.Add(TimerType.SubGift, new Timer(() => { SubGiftTimeUp(); }, 45));
-        //_timerDictionary.Add(TimerType.SubMonthEnd, new Timer(() => { SubMonthEndTimeUp(); }, 120));
-
         //_timerDictionary.Add(TimerType.ViewerCount, new Timer(() => { ViewerCountTimeUp(); }, 10));
-        //_timerDictionary.Add(TimerType.Partnerships, new Timer(() => { PartnershipTimeUp(); }, 60));
-        //_timerDictionary.Add(TimerType.HypeTrain, new Timer(() => { HypeTrainTimeUp(); }, 90));
         // random event?
 
         //_audienceChangeMode = new Timer(() => { _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard; }, 0);

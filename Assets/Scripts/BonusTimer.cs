@@ -13,11 +13,11 @@ public class BonusTimer : MonoBehaviour
 
         var a = new StaticTimerData()
         {
-            TimerType = TimerType.BonusChest,
-            RefreshType = TimerRefreshType.NeedToClaim,
+            //TimerType = TimerType.BonusChest,
+            RefreshType = TimerRefreshType.NeedToStart,
             InitialDuration = 60 * 5,
         };
-        _bonusChestTimer = new StaticTimer(a, GiveBonus);
+        _bonusChestTimer = new StaticTimer(a, ShowBonusButton);
     }
 
     void Update()
@@ -27,10 +27,17 @@ public class BonusTimer : MonoBehaviour
         _bonusChestTimer.Increment(Time.deltaTime);
     }
 
-    private void GiveBonus()
+    private void ShowBonusButton()
+    {
+        _bonusButtonGO.SetActive(true);
+    }
+
+    public void GiveBonus()
     {
         Debug.Log("dskfljsdklfdssdf");
         // TODO: balance
-        CurrencyController.Instance.AddXP(1);
+        CurrencyController.Instance.AddXP(10);
+        _bonusChestTimer.Restart();
+        _bonusButtonGO.SetActive(false);
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class RedeemShop : BaseShop
 {
     [SerializeField] private ShopScriptableObject _data;
-    private Dictionary<TimerType, ShopItemButton> _shopItemButtons = new Dictionary<TimerType, ShopItemButton>();
-    private Dictionary<TimerType, PurchaseStateType> _purchasedItems = new Dictionary<TimerType, PurchaseStateType>();
+    private Dictionary<UpgradeableTimerType, ShopItemButton> _shopItemButtons = new Dictionary<UpgradeableTimerType, ShopItemButton>();
+    private Dictionary<UpgradeableTimerType, PurchaseStateType> _purchasedItems = new Dictionary<UpgradeableTimerType, PurchaseStateType>();
     private GameObject _noItemsGO;
 
     private enum PurchaseStateType
@@ -25,6 +25,8 @@ public class RedeemShop : BaseShop
 
         foreach (var item in _data.ShopDictionary)
         {
+            if (item.Value.UnlockCost < 0) continue;
+
             ShopItemButton a = Instantiate(_shopButtonPrefab, _scrollerButtonHolder);
             a.Init(item.Key, this, item.Value.Name, item.Value.Icon); //item.Value.UnlockCurrency, item.Value.UnlockCost
             _shopItemButtons.Add(item.Key, a);
@@ -41,7 +43,7 @@ public class RedeemShop : BaseShop
         CurrencyController.RefreshShopButtons -= RefreshShopButtons;
     }
 
-    public void BuyTimer(TimerType type)
+    public void BuyTimer(UpgradeableTimerType type)
     {
         if (CurrencyController.Instance.PaidShopCost(_data.ShopDictionary[type].UnlockCurrency, _data.ShopDictionary[type].UnlockCost))
         {
@@ -59,7 +61,7 @@ public class RedeemShop : BaseShop
         }
     }
 
-    protected string aaa(TimerType type)
+    protected string aaa(UpgradeableTimerType type)
     {
         switch (_purchasedItems[type])
         {

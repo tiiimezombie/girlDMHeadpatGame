@@ -77,6 +77,12 @@ TextureImporter:
   - first:
       213: -8766440772483471547
     second: girldmZoom
+  - first:
+      213: 987187879811868147
+    second: upgrade_xp
+  - first:
+      213: -4852149574536853459
+    second: upgrade_money
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -694,6 +700,48 @@ TextureImporter:
       bones: []
       spriteID: 5472f936098575680800000000000000
       internalID: -8766440772483471547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upgrade_xp
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 5
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f5e1c6752233bd00800000000000000
+      internalID: 987187879811868147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: upgrade_money
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 5
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d280ba47ba3b9acb0800000000000000
+      internalID: -4852149574536853459
       vertices: []
       indices: 
       edges: []

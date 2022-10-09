@@ -201,6 +201,12 @@ public class RedeemPreference
     public RedeemType Type;
 }
 
+[System.Serializable]
+public class StaticTimerData : BaseTimerData
+{
+    private event System.Action OnClaim;
+}
+
 // Serialized dictionary classes
 [System.Serializable]
 public class RedeemDictionary : SerializableDictionary<RedeemType, Redeem> { }
@@ -224,3 +230,6 @@ public class AudiencePreferenceStorage : SerializableDictionary.Storage<Audience
 
 [System.Serializable]
 public class StringArrayStorage : SerializableDictionary.Storage<string[]> { }
+
+[System.Serializable]
+public class StaticTimerDictionary : SerializableDictionary<UpgradeableTimerType, StaticTimerData> { }

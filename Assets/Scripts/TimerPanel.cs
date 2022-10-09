@@ -17,7 +17,8 @@ public class TimerPanel : MonoBehaviour
     [SerializeField] private Button _moneyUpgradeButton;
     [SerializeField] private TextMeshProUGUI _moneyUpgradeButtonText;
 
-    private TimerType _timerType;
+    private UpgradeableTimerType _timerType;
+    private TimerRefreshType _timerRefreshType;
 
     private void Awake()
     {
@@ -29,13 +30,20 @@ public class TimerPanel : MonoBehaviour
         ShopTimerController.SetPanelView -= SetView;
     }
 
-    public void Setup(TimerType timerType, string name, bool canPayXP, string xpCost, bool canPayMoney, string moneyCost)
+    public void Setup(UpgradeableTimerType timerType, TimerRefreshType refreshType, string name)
     {
         _timerType = timerType;
+        _timerRefreshType = refreshType;
         _viewOneHolderGO.SetActive(true);
         _viewTwoHolderGO.SetActive(false);
         _titleText.text = name;
 
+        if (refreshType == TimerRefreshType.AutoRun) _claimButtonText.text = "auto";
+        _claimButton.interactable = false;
+    }
+
+    public void Refresh(bool canPayXP, string xpCost, bool canPayMoney, string moneyCost)
+    {
         _xpUpgradeButton.interactable = canPayXP;
         _xpUpgradeButtonText.text = xpCost;
         _moneyUpgradeButton.interactable = canPayMoney;

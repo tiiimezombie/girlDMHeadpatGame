@@ -8,6 +8,7 @@ using DG.Tweening;
 public class CurrencyController : Singleton<CurrencyController>
 {
     #region -- Money --
+    public static event System.Action MoneyChanged;
     public long Money
     {
         get => _money;
@@ -16,6 +17,7 @@ public class CurrencyController : Singleton<CurrencyController>
             _money = value;
             _footerButtons.MoneyText.text = GameController.GetPrettyLong(_money);
             _moneyText.text = GameController.GetPrettyLong(_moneyOverall);
+            MoneyChanged?.Invoke();
         }
     }
     private long _money;
@@ -32,7 +34,7 @@ public class CurrencyController : Singleton<CurrencyController>
     #endregion
 
     #region -- XP --
-
+    public static event System.Action XPChanged;
     public long XP
     {
         get => _xp;
@@ -40,6 +42,7 @@ public class CurrencyController : Singleton<CurrencyController>
         {
             _xp = value;
             _footerButtons.XPText.text = GameController.GetPrettyLong(_xp);
+            XPChanged?.Invoke();
         }
     }
     private long _xp;

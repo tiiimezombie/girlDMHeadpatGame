@@ -12,129 +12,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed39bf2913ce1bb41a3d28974b4ac0cb, type: 3}
   m_Name: ShopScriptableObject
   m_EditorClassIdentifier: 
-  StaticTimerDictionary:
-    m_keys: 0000000002000000
-    m_values:
-    - Name: 
-      TimerType: 0
-      RefreshType: 0
-      InitialDuration: 10
-    - Name: 
-      TimerType: 2
-      RefreshType: 0
-      InitialDuration: 12
   ShopDictionary:
-    m_keys: 030000000400000005000000060000000700000008000000090000000a0000000b000000
+    m_keys: 0000000001000000020000000300000004000000
     m_values:
     - Name: Headpat
-      TimerType: 3
       RefreshType: 0
-      InitialDuration: 4
+      InitialDuration: 16
       ReturnCurrency: 4
-      InitialReturnValue: 1
+      InitialReturnValue: 0
       Icon: {fileID: 0}
-      UnlockCurrency: 1
+      UnlockCurrency: 0
+      UnlockCost: -1
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Shop item
+      RefreshType: 0
+      InitialDuration: 30
+      ReturnCurrency: 1
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: -1
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Shop item
+      RefreshType: 0
+      InitialDuration: 30
+      ReturnCurrency: 1
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
       UnlockCost: 5
       DurationUpgradeList:
       - Cost: 1
-        NewDuration: 2
-      - Cost: 20
-        NewDuration: 4
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Donation Value
-      TimerType: 0
-      RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
-      InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
-      UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Group Pat
-      TimerType: 5
-      RefreshType: 1
-      InitialDuration: 50
-      ReturnCurrency: 0
-      InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
-      UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
     - Name: Phrase
-      TimerType: 6
       RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
+      InitialDuration: 30
+      ReturnCurrency: 1
       InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
       UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Donation Value
-      TimerType: 0
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Shop item
       RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
+      InitialDuration: 30
+      ReturnCurrency: 1
       InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
       UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Chat Commands
-      TimerType: 0
-      RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
-      InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
-      UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Donation Value
-      TimerType: 0
-      RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
-      InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
-      UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Donation Value
-      TimerType: 0
-      RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
-      InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
-      UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
-    - Name: Click Crit Chance
-      TimerType: 0
-      RefreshType: 0
-      InitialDuration: 50
-      ReturnCurrency: 0
-      InitialReturnValue: 1
-      Icon: {fileID: 0}
-      UnlockCurrency: 1
-      UnlockCost: 5
-      DurationUpgradeList: []
-      MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 2
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0

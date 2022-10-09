@@ -11,14 +11,14 @@ public class ShopItemButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private Image _image;
     [SerializeField] private TextMeshProUGUI _value;
-    private TimerType _type;
+    private UpgradeableTimerType _type;
     private RedeemShop _parentShop;
     private Action _onClick;
 
     //private int _cost;
     //private CurrencyType _currency;
 
-    public void Init(TimerType item, RedeemShop parentShop, string name, Sprite icon) //, CurrencyType costCurrency, int cost
+    public void Init(UpgradeableTimerType item, RedeemShop parentShop, string name, Sprite icon) //, CurrencyType costCurrency, int cost
     {
         //BaseShop.RefreshButtons += Refresh;
         _type = item;
