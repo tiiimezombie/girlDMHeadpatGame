@@ -32,6 +32,7 @@ public class AudienceScriptableObject : ScriptableObject
 
     private Dictionary<AudienceMemberType, int[]> _chatPreferenceDictionary = new Dictionary<AudienceMemberType, int[]>();
     private Dictionary<AudienceMemberType, int[]> _redeemPreferenceDictionary = new Dictionary<AudienceMemberType, int[]>();
+    public StaticTimerDictionary StaticTimerDictionary = new StaticTimerDictionary();
 
     internal void Init()
     {
@@ -232,4 +233,4 @@ public class AudiencePreferenceStorage : SerializableDictionary.Storage<Audience
 public class StringArrayStorage : SerializableDictionary.Storage<string[]> { }
 
 [System.Serializable]
-public class StaticTimerDictionary : SerializableDictionary<UpgradeableTimerType, StaticTimerData> { }
+public class StaticTimerDictionary : SerializableDictionary<StaticTimerType, StaticTimerData> { }

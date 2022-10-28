@@ -84,4 +84,9 @@ public class GameController : Singleton<GameController>
         IsPlaying = true;
         SetPlaying?.Invoke(IsPlaying);
     }
+
+    public void SetTimeScale(float multiplier)
+    {
+        Time.timeScale = multiplier;
+    }
 }

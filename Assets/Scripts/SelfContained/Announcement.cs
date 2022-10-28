@@ -17,7 +17,7 @@ public class Announcement : MonoBehaviour
 
     void Start()
     {
-        _baseRT.anchoredPosition = new Vector2(0, 300);
+        _baseRT.anchoredPosition = new Vector2(0, 120);
     }
 
     public void AddMessage(string username, string thing)
@@ -58,9 +58,9 @@ public class Announcement : MonoBehaviour
             _redeemed = false;
 
             seq = DOTween.Sequence();
-            seq.Append(_baseRT.DOAnchorPosY(0, 1f))
-                .AppendInterval(5)
-                .Append(_baseRT.DOAnchorPosY(300, 1f));
+            seq.SetEase(Ease.Linear).Append(_baseRT.DOAnchorPosY(0, 0.5f))
+                .AppendInterval(4)
+                .Append(_baseRT.DOAnchorPosY(120, 0.5f));
 
             seq.Play();
 

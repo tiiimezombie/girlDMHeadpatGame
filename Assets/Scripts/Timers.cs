@@ -55,7 +55,7 @@ public class StaticTimer : BaseTimer
 
 public class UpgradeableTimer : BaseTimer
 {
-    public TimerRefreshType RefreshType { get => _data.RefreshType; }
+    //public TimerRefreshType RefreshType { get => _data.RefreshType; }
 
     public long CurrentValue { get => _data.InitialReturnValue + CurrentMultiplierLevel * _data.MultiplierLevelValue; }
 
@@ -79,7 +79,7 @@ public class UpgradeableTimer : BaseTimer
     private int CurrentMultiplierLevel;
     private int DurationIndex = 0;
 
-    public UpgradeableTimer(UpgradeableTimerData data, TimerPanel panel)
+    public UpgradeableTimer(UpgradeableTimerType type, UpgradeableTimerData data, TimerPanel panel)
     {
         _data = data;
 
@@ -89,7 +89,7 @@ public class UpgradeableTimer : BaseTimer
         Restart();
 
         _timerPanel = panel;
-        _timerPanel.Setup(_data.TimerType, _data.RefreshType, _data.Name);
+        _timerPanel.Setup(type, _data.RefreshType, _data.Name);
         RefreshPanel();
     }
 
@@ -103,6 +103,8 @@ public class UpgradeableTimer : BaseTimer
         // Do timer
         if (CurrentTime < CurrentDuration) return;
 
+        _skipCounting = true;
+
         // Claim
         if (_data.RefreshType == TimerRefreshType.NeedToClaim)
         {
@@ -111,8 +113,6 @@ public class UpgradeableTimer : BaseTimer
         }
 
         Claim();
-
-        _skipCounting = true;
 
         // Rerun
         if (_data.RefreshType == TimerRefreshType.AutoRun)
@@ -137,13 +137,28 @@ public class UpgradeableTimer : BaseTimer
     public void Claim()
     {
         ShopTimerController.Instance.Claim(_data.ReturnCurrency, CurrentValue);
+        Debug.Log(_data.ReturnCurrency + " " + CurrentValue);
+        Restart();
         RefreshPanel();
     }
 
     public void RefreshPanel()
     {
         _timerPanel.Refresh(CurrencyController.Instance.XP >= CurrentCostToIncreaseMultiplier, CurrentCostToIncreaseMultiplier > 0 ? GameController.GetPrettyLong(CurrentCostToIncreaseMultiplier) : "-", HasDurationUpgrade &&
-            CurrencyController.Instance.Money >= CurrentCostToDecreaseDuration, CurrentCostToDecreaseDuration > 0 ? CurrentCostToDecreaseDuration.ToString() : "-");
+            CurrencyController.Instance.Money >= CurrentCostToDecreaseDuration, CurrentCostToDecreaseDuration > 0 ? CurrentCostToDecreaseDuration.ToString() : "-",
+            PanelButtonInteractable());
+    }
+
+    private bool PanelButtonInteractable()
+    {
+        switch (_data.RefreshType)
+        {
+            case TimerRefreshType.NeedToClaim:
+                return _skipCounting;
+            case TimerRefreshType.NeedToStart:
+                return CurrentTime == 0;
+            default: return false;
+        }
     }
 }
 
@@ -178,10 +193,14 @@ public enum UpgradeableTimerType
 
 public enum StaticTimerType
 {
+    Chat,
+    AudienceAdjust,
+
     Raid,
     Tier,
     Gift,
-    BonusChest,
+
+    BonusChest,    
 }
 
 public enum TimerRefreshType

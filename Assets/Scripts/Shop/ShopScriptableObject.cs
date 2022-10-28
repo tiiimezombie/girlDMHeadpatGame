@@ -93,15 +93,9 @@ public enum CurrencyType
 #region -- Timers --
 
 
-
-
-
-
-
 [System.Serializable]
 public class UpgradeableTimerData : BaseTimerData
 {
-    public UpgradeableTimerType TimerType { get; protected set; }
     public CurrencyType ReturnCurrency;
     public int InitialReturnValue = 1;
 

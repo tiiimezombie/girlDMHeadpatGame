@@ -39,15 +39,16 @@ public class TimerPanel : MonoBehaviour
         _titleText.text = name;
 
         if (refreshType == TimerRefreshType.AutoRun) _claimButtonText.text = "auto";
-        _claimButton.interactable = false;
+        //_claimButton.interactable = false;
     }
 
-    public void Refresh(bool canPayXP, string xpCost, bool canPayMoney, string moneyCost)
+    public void Refresh(bool canPayXP, string xpCost, bool canPayMoney, string moneyCost, bool claimButtonInteractable)
     {
         _xpUpgradeButton.interactable = canPayXP;
         _xpUpgradeButtonText.text = xpCost;
         _moneyUpgradeButton.interactable = canPayMoney;
         _moneyUpgradeButtonText.text = moneyCost;
+        _claimButton.interactable = claimButtonInteractable;
     }
 
     public void SetProgress(float progress)

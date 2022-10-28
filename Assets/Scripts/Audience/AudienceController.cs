@@ -20,7 +20,8 @@ public class AudienceController : Singleton<AudienceController>
 
     [SerializeField] private AudienceScriptableObject _dataObject;
     [SerializeField] private ChatFeed _chatFeed;
-    [SerializeField] private RedeemFeed _redeemFeed;
+    [SerializeField] private MilestoneController _milestoneController;
+    //[SerializeField] private RedeemFeed _redeemFeed;
     [SerializeField] private Announcement _announcement;
     [SerializeField] private TextMeshProUGUI _viewerCountText;
 
@@ -68,11 +69,18 @@ public class AudienceController : Singleton<AudienceController>
         }
     }
     private long _viewerCount;
-    private long _realViewerCount;
+    //private long _realViewerCount;
+    private long _minViewerCount;
 
-    private StaticTimerData _chatMessage;
-    private StaticTimerData _gift;
-    private StaticTimerData _raid;
+    //private Dictionary<StaticTimerType, StaticTimer> _timerDictionary = new Dictionary<StaticTimerType, StaticTimer>();
+    //private StaticTimerData _chatMessage;
+    //private StaticTimerData _gift;
+    //private StaticTimerData _raid;
+    private List<StaticTimerType> _timersThatExist = new List<StaticTimerType>();
+    private StaticTimer _adjustAudienceTimer;
+    private StaticTimer _chatTimer;
+    private StaticTimer _giftTimer;
+    private StaticTimer _raidTimer;
 
     //private double _subCount;
 
@@ -118,7 +126,7 @@ public class AudienceController : Singleton<AudienceController>
 
     private void Start()
     {
-        _dataObject.Init();
+        //_dataObject.Init();
 
         // TODO:
         // chat timer
@@ -128,12 +136,12 @@ public class AudienceController : Singleton<AudienceController>
 
         // obvi, these should be saved to a scriptable object for management
 
-        var a = new StaticTimerData()
-        {
-            //TimerType = TimerType.Raid,
-            RefreshType = TimerRefreshType.NeedToStart,
-            InitialDuration = 60 * 5,
-        };
+        //var a = new StaticTimerData()
+        //{
+        //    //TimerType = TimerType.Raid,
+        //    RefreshType = TimerRefreshType.NeedToStart,
+        //    InitialDuration = 60 * 5,
+        //};
         //_bonusChestTimer = new StaticTimer(a, ShowBonusButton);
 
         // Audience controller has a list of events that happen regularly
@@ -147,8 +155,8 @@ public class AudienceController : Singleton<AudienceController>
 
         //_audienceChangeMode = new Timer(() => { _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard; }, 0);
 
-        _realViewerCount = 5;
-        ViewerCount = _realViewerCount;
+        _minViewerCount = 3;
+        ViewerCount = (long)_minViewerCount;
         _audienceCompositionPercentArray_current = _audienceCompositionPercentArray_standard;
 
         // 
@@ -161,10 +169,65 @@ public class AudienceController : Singleton<AudienceController>
         //_chatMessage.Setup(GiveBonus);
     }
 
-    #region -- TimeUp --
-
-    private void DoChat()
+    public void UnlockTimer(StaticTimerType type)
     {
+        if (_timersThatExist.Contains(type)) return;
+
+        _timersThatExist.Add(type);
+
+        switch (type)
+        {
+            case StaticTimerType.AudienceAdjust:
+                var z = new StaticTimerData()
+                {
+                    //TimerType = TimerType.BonusChest,
+                    RefreshType = TimerRefreshType.AutoRun,
+                    InitialDuration = 20,
+                };
+                _adjustAudienceTimer = new StaticTimer(z, TimeUp_AdjustAudience);
+                break; 
+            case StaticTimerType.Chat:
+                var a = new StaticTimerData()
+                {
+                    //TimerType = TimerType.BonusChest,
+                    RefreshType = TimerRefreshType.AutoRun,
+                    InitialDuration = 20,
+                };
+                _chatTimer = new StaticTimer(a, TimeUp_DoChat);
+                break;
+            case StaticTimerType.Gift:
+                var b = new StaticTimerData()
+                {
+                    //TimerType = TimerType.BonusChest,
+                    RefreshType = TimerRefreshType.AutoRun,
+                    InitialDuration = 100,
+                };
+                _giftTimer = new StaticTimer(b, TimeUp_Gift);
+                break;
+            case StaticTimerType.Raid:
+                var c = new StaticTimerData()
+                {
+                    //TimerType = TimerType.BonusChest,
+                    RefreshType = TimerRefreshType.AutoRun,
+                    InitialDuration = 100,
+                };
+                _raidTimer = new StaticTimer(c, TimeUp_Raid);
+                break;
+        }
+
+        //_timerDictionary.Add(type, new StaticTimer(_dataObject.StaticTimerDictionary[type], () => TimeUp(type)));
+    }
+
+    private void TimeUp_AdjustAudience()
+    {
+        Debug.Log("adjust");
+        AddViewers(Random.Range(-2, 4) * 3, ViewerSourceType.Normal);
+    }
+
+    private void TimeUp_DoChat()
+    {
+        Debug.Log("do chat");
+
         // it's either flat rate of x% for xp generation
         // or based on recent raid/ % audience composition
 
@@ -175,6 +238,19 @@ public class AudienceController : Singleton<AudienceController>
         _chatFeed.AddEntry(chat, _dataObject.GetAudienceUsername(viewer), _dataObject.GetChat(chat));
     }
 
+    private void TimeUp_Gift()
+    {
+        Debug.Log("do gift");
+        //DoChat();
+    }
+
+    private void TimeUp_Raid()
+    {
+        Debug.Log("do raid");
+    }
+
+    #region -- TimeUp --
+
     public void IncreaseViewerCap(long value)
     {
         Debug.Log("add viewer cap " + value);
@@ -183,25 +259,28 @@ public class AudienceController : Singleton<AudienceController>
     public void AddFavor(long value)
     {
         Debug.Log("favor " + value);
+
+        if (_timersThatExist.Contains(StaticTimerType.Raid))
+        {
+            _raidTimer.Increment(value);
+            if(value > 0)
+            {
+                float multiplier = value / _raidTimer.CurrentDuration;
+                Debug.Log(multiplier);
+            }            
+        }
+        // 
     }
 
-    //private void HeadPatTimeUp()
+    //private void RedemptionTimeUp()
     //{
-    //    HeadpatController.Instance.AddHeadpats(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.HeadpatValue].Tier);
-    //    _redeemFeed.AddEntry("Headpat fan 100", _dataObject.GetRedeem(RedeemType.Headpat), true);
+    //    // Redeem percent array
+
+    //    var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
+
+    //    var redeemType = _dataObject.ChooseRedeemTypeByAudience(viewer);
+    //    _redeemFeed.AddEntry(_dataObject.GetAudienceUsername(viewer), _dataObject.GetRedeem(redeemType));
     //}
-
-
-
-    private void RedemptionTimeUp()
-    {
-        // Redeem percent array
-
-        var viewer = (AudienceMemberType)GameController.GetWeightedRandomFromArray(_audienceCompositionPercentArray_current);
-
-        var redeemType = _dataObject.ChooseRedeemTypeByAudience(viewer);
-        _redeemFeed.AddEntry(_dataObject.GetAudienceUsername(viewer), _dataObject.GetRedeem(redeemType));
-    }
 
     //private void DonationTimeUp()
     //{
@@ -273,14 +352,9 @@ public class AudienceController : Singleton<AudienceController>
     //    }
     //}
 
-    private void PartnershipTimeUp()
-    {
-        //CurrencyController.Instance.AddMoney(CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Partnerships].Tier);
-    }
-
     private void HypeTrainTimeUp()
     {
-        if (_realViewerCount < 128) return;
+        //if (_realViewerCount < 128) return;
 
         Debug.LogError("SET HYPE TRAIN UP BETTER");
         //CurrencyController.Instance.AddMoney(CurrencyController.Instance.ShopLibrary.MilestoneDictionary[ShopType.Partnerships].Tier);
@@ -294,7 +368,7 @@ public class AudienceController : Singleton<AudienceController>
 
         //foreach (var v in _timerDictionary.Values)
         //{
-        //    v.Increment();
+        //    v.Increment(Time.deltaTime);
         //}
 
         //if (_audienceChanged) _audienceChangeMode.Increment();
@@ -312,10 +386,10 @@ public class AudienceController : Singleton<AudienceController>
             _announcement.AddMessage(_dataObject.GetAudienceUsername(AudienceMemberType.Good), "is gifting " + subs + " sub(s)!");
     }
 
-    internal void AddViewersAsReward(int viewers)
-    {
-        AddViewers(viewers, ViewerSourceType.Reward);
-    }
+    //internal void AddViewersAsReward(int viewers)
+    //{
+    //    AddViewers(viewers, ViewerSourceType.Reward);
+    //}
 
     //internal void SetTimerMax(ShopType type)
     //{
@@ -353,21 +427,29 @@ public class AudienceController : Singleton<AudienceController>
             _announcement.AddMessage("girl_dm_", "invited her friends");
         }
 
-        if (_viewerAddCoroutine != null) StopCoroutine(_viewerAddCoroutine);
-        _realViewerCount += viewers;
-        if (_realViewerCount < 0) _realViewerCount = 0;
+        //if (_viewerAddCoroutine != null) StopCoroutine(_viewerAddCoroutine);
 
-        _viewerAddCoroutine = StartCoroutine(SlowlyAddViewers());
+        if (viewers < 0)
+        {
+            if (ViewerCount - viewers < _minViewerCount)
+            {                
+                viewers = -(int)(ViewerCount - _minViewerCount);               
+            }
+        }
+
+        DOTween.To(() => ViewerCount, x => ViewerCount = x, ViewerCount + viewers, 1).SetEase(Ease.OutCirc).OnComplete(
+            ()=> { _milestoneController.CheckForViewerMilestone(); });
+        //_viewerAddCoroutine = StartCoroutine(SlowlyAddViewers(viewers));
     }
 
     WaitForSeconds boo = new WaitForSeconds(0.5f);
 
-    IEnumerator SlowlyAddViewers()
+    IEnumerator SlowlyAddViewers(int viewersToAdd)
     {
-        var a = _realViewerCount - _viewerCount;
+        var a = viewersToAdd;
         a /= 10;
         //a = Math.Round(a);
-        var remainder = (_realViewerCount - _viewerCount) - (a * 10);
+        var remainder = viewersToAdd - (a * 10);
 
         _viewerCount += remainder;
 

@@ -68,7 +68,7 @@ public class CurrencyController : Singleton<CurrencyController>
 
     #region -- Headpats --
 
-    public long PatsRedeemed
+    public long HeadpatsRedeemed
     {
         get => _patsRedeemed;
         set
@@ -109,36 +109,25 @@ public class CurrencyController : Singleton<CurrencyController>
     {
         PatsQueued -= number;
 
-        DOTween.To(() => PatsRedeemed, x => PatsRedeemed = x, PatsRedeemed + number, 1).OnComplete(() => {
-            _milestoneController.CheckForMilestone(PatsRedeemed);
+        DOTween.To(() => HeadpatsRedeemed, x => HeadpatsRedeemed = x, HeadpatsRedeemed + number, 1).SetEase(Ease.OutCirc).OnComplete(() => {
+            _milestoneController.CheckForHeadpatMilestone();
         });
     }
 
     #endregion
 
     public static Action RefreshShopButtons;
-    //[SerializeField] ShopScriptableObject ShopLibrary;
     [SerializeField] private FooterButtons _footerButtons;
-
-    //public static Dictionary<ShopType, int> ShopTiersPurchased = new Dictionary<ShopType, int>();
 
     private void Start()
     {
         Money = 0;
         XP = 0;
 
-        PatsRedeemed = 0;
+        // TODO: remove in real game
+        Debug.Log("boost for efficient testing");
+        HeadpatsRedeemed = 9; //0;
         PatsQueued = 0;
-
-        //foreach (var thing in ShopLibrary.ShopDictionary)
-        //{
-        //    thing.Value.Reset();
-        //}
-
-        //foreach (var v in System.Enum.GetValues(typeof(ShopType)))
-        //{
-        //    ShopTiersPurchased.Add((ShopType)v, 1);
-        //}
     }
 
     public bool PaidShopCost(CurrencyType currency, int amt)

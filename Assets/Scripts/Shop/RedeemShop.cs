@@ -43,6 +43,15 @@ public class RedeemShop : BaseShop
         CurrencyController.RefreshShopButtons -= RefreshShopButtons;
     }
 
+    public void UnlockTimer (UpgradeableTimerType type)
+    {
+        if (!_purchasedItems.ContainsKey(type)) return;
+        if (_purchasedItems[type] != PurchaseStateType.Locked) return;
+
+        _purchasedItems[type] = PurchaseStateType.Purchased;
+        _shopItemButtons[type].Refresh(_purchasedItems[type] == PurchaseStateType.Ready, aaa(type));
+    }
+
     public void BuyTimer(UpgradeableTimerType type)
     {
         if (CurrencyController.Instance.PaidShopCost(_data.ShopDictionary[type].UnlockCurrency, _data.ShopDictionary[type].UnlockCost))

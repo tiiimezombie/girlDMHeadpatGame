@@ -42,7 +42,7 @@ public class ShopTimerController : Singleton<ShopTimerController>
         if (_panelTimerDictionary.ContainsKey(type)) return;
 
         var a = Instantiate(_timerPanelPrefab, _timerHolder);
-        _panelTimerDictionary.Add(type, new UpgradeableTimer(_timerScriptableObject.ShopDictionary[type], a));
+        _panelTimerDictionary.Add(type, new UpgradeableTimer(type, _timerScriptableObject.ShopDictionary[type], a));
     }
 
     void Update()
@@ -90,7 +90,7 @@ public class ShopTimerController : Singleton<ShopTimerController>
     {
         if (!_panelTimerDictionary.ContainsKey(timer)) return;
 
-        switch (_panelTimerDictionary[timer].RefreshType)
+        switch (_timerScriptableObject.ShopDictionary[timer].RefreshType)
         {
             case TimerRefreshType.NeedToClaim:
                 _panelTimerDictionary[timer].Claim();
@@ -98,32 +98,49 @@ public class ShopTimerController : Singleton<ShopTimerController>
             case TimerRefreshType.NeedToStart:
                 _panelTimerDictionary[timer].Restart();
                 break;
+            default:
+                Debug.Log("wut");
+                break;
         }
     }
 
-    public void PanelMultiplierUpgradeRequested(UpgradeableTimerType type)
+    public void PanelMultiplierUpgradeRequested(UpgradeableTimerType type, bool payCost = true)
     {
         if (!_panelTimerDictionary.ContainsKey(type)) return;
 
-        if (CurrencyController.Instance.XP >= _panelTimerDictionary[type].CurrentCostToIncreaseMultiplier)
+        if (!payCost)
+        {
+            _panelTimerDictionary[type].UpgradeMultiplier();
+        }
+        else if (CurrencyController.Instance.XP >= _panelTimerDictionary[type].CurrentCostToIncreaseMultiplier)
         {
             CurrencyController.Instance.XP -= _panelTimerDictionary[type].CurrentCostToIncreaseMultiplier;
             _panelTimerDictionary[type].UpgradeMultiplier();
         }
     }
 
-    public void PanelSpeedUpgradeRequested(UpgradeableTimerType type)
+    public void PanelSpeedUpgradeRequested(UpgradeableTimerType type, bool payCost = true)
     {
         if (!_panelTimerDictionary.ContainsKey(type)) return;
 
-        if (CurrencyController.Instance.Money >= _panelTimerDictionary[type].CurrentCostToDecreaseDuration)
+        if (!payCost)
+        {
+            _panelTimerDictionary[type].UpgradeSpeed();
+        }
+        else if (CurrencyController.Instance.Money >= _panelTimerDictionary[type].CurrentCostToDecreaseDuration)
         {
             CurrencyController.Instance.Money -= _panelTimerDictionary[type].CurrentCostToDecreaseDuration;
             _panelTimerDictionary[type].UpgradeSpeed();
         }
     }
 
-    public void Unlock(UpgradeableTimerType timer)
+    public void AddTimerToShop(UpgradeableTimerType timer)
+    {
+        //MakeTimer(timer);
+
+    }
+
+    public void EnableTimer(UpgradeableTimerType timer)
     {
         MakeTimer(timer);
     }

@@ -17,7 +17,7 @@ MonoBehaviour:
     m_values:
     - Name: Headpat
       RefreshType: 0
-      InitialDuration: 16
+      InitialDuration: 10
       ReturnCurrency: 4
       InitialReturnValue: 0
       Icon: {fileID: 0}
@@ -25,9 +25,11 @@ MonoBehaviour:
       UnlockCost: -1
       DurationUpgradeList:
       - Cost: 1
-        NewDuration: 8
-      - Cost: 0
-        NewDuration: 0
+        NewDuration: 6
+      - Cost: 50
+        NewDuration: 4
+      - Cost: 50
+        NewDuration: 2
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
     - Name: Shop item
@@ -63,14 +65,14 @@ MonoBehaviour:
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
     - Name: Phrase
-      RefreshType: 0
+      RefreshType: 1
       InitialDuration: 30
       ReturnCurrency: 1
       InitialReturnValue: 1
       Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
         type: 3}
       UnlockCurrency: 0
-      UnlockCost: 5
+      UnlockCost: -1
       DurationUpgradeList:
       - Cost: 1
         NewDuration: 8

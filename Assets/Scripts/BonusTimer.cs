@@ -32,6 +32,9 @@ public class BonusTimer : MonoBehaviour
         _bonusButtonGO.SetActive(true);
     }
 
+    /// <summary>
+    /// Used by UI
+    /// </summary>
     public void GiveBonus()
     {
         Debug.Log("dskfljsdklfdssdf");

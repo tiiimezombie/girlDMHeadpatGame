@@ -27,6 +27,7 @@ public class ClickTracker : MonoBehaviour
     private long _comboCount = 0;
 
     private long _bonusClicks;
+    private bool _canCritPat;
 
     private float _comboTimeout = 2;
     private float _comboTimer;
@@ -36,6 +37,7 @@ public class ClickTracker : MonoBehaviour
     protected void Start()
     {
         ComboCount = 0;
+        _canCritPat = false;
     }
 
     private void Update()
@@ -58,7 +60,7 @@ public class ClickTracker : MonoBehaviour
         //Debug.Log("pat");
         long increase = 0;
 
-        if (Random.Range(0, 20) < 1) // 5%
+        if (_canCritPat && Random.Range(0, 20) < 1) // 5%
         {
             _bonusClicks += 5;
             //increase = HeadpatController.Instance.HeadPatRemainder(ComboCount, CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickValue].Tier + (int)System.Math.Pow(CurrencyController.Instance.ShopLibrary.ShopDictionary[ShopType.ClickCritValue].Tier, 2));
@@ -78,5 +80,10 @@ public class ClickTracker : MonoBehaviour
         _comboTween.Kill();
         _comboText.transform.localScale = Vector3.one * (ComboCount/100 + 1);
         _comboTween = _comboText.transform.DOPunchScale(new Vector3(1.4f, 1.4f, 1), 0.3f, 1);
+    }
+
+    public void UnlockCritPats()
+    {
+        _canCritPat = true;
     }
 }
