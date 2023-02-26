@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShopScriptableObject
   m_EditorClassIdentifier: 
   ShopDictionary:
-    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
     m_values:
     - Name: Headpat
       RefreshType: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
         NewDuration: 0
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
-    - Name: Phrase
+    - Name: In-jokes
       RefreshType: 1
       InitialDuration: 30
       ReturnCurrency: 1
@@ -83,7 +83,7 @@ MonoBehaviour:
       - Cost: 10
         NewDuration: 4
       MultiplierLevelValue: 1
-      MultiplierUpgradeCostPerLevel: 5
+      MultiplierUpgradeCostPerLevel: 2
     - Name: Emote
       RefreshType: 2
       InitialDuration: 30
@@ -101,7 +101,7 @@ MonoBehaviour:
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
     - Name: Change Accessory
-      RefreshType: 2
+      RefreshType: 1
       InitialDuration: 30
       ReturnCurrency: 3
       InitialReturnValue: 1
@@ -116,9 +116,9 @@ MonoBehaviour:
         NewDuration: 0
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
-    - Name: Merch
-      RefreshType: 0
-      InitialDuration: 30
+    - Name: Partnership
+      RefreshType: 2
+      InitialDuration: 32
       ReturnCurrency: 0
       InitialReturnValue: 1
       Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
@@ -148,11 +148,11 @@ MonoBehaviour:
         NewDuration: 0
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
-    - Name: Ad Payout
+    - Name: Twitch Payout
       RefreshType: 1
-      InitialDuration: 30
+      InitialDuration: 32
       ReturnCurrency: 1
-      InitialReturnValue: 5
+      InitialReturnValue: 1
       Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
         type: 3}
       UnlockCurrency: 2
@@ -165,7 +165,7 @@ MonoBehaviour:
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
     - Name: Tweet
-      RefreshType: 1
+      RefreshType: 2
       InitialDuration: 30
       ReturnCurrency: 1
       InitialReturnValue: 1
@@ -182,9 +182,9 @@ MonoBehaviour:
       MultiplierUpgradeCostPerLevel: 0
     - Name: TikTok
       RefreshType: 2
-      InitialDuration: 30
+      InitialDuration: 32
       ReturnCurrency: 5
-      InitialReturnValue: 1
+      InitialReturnValue: 5
       Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
         type: 3}
       UnlockCurrency: 0
@@ -204,6 +204,38 @@ MonoBehaviour:
       Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
         type: 3}
       UnlockCurrency: 0
+      UnlockCost: 50
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Charisma
+      RefreshType: 0
+      InitialDuration: 32
+      ReturnCurrency: 1
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 2
+      UnlockCost: 50
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Stream In-Jokes
+      RefreshType: 0
+      InitialDuration: 32
+      ReturnCurrency: 3
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 2
       UnlockCost: 50
       DurationUpgradeList:
       - Cost: 1
