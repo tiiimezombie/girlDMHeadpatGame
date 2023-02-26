@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShopScriptableObject
   m_EditorClassIdentifier: 
   ShopDictionary:
-    m_keys: 0000000001000000020000000300000004000000
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
     m_values:
     - Name: Headpat
       RefreshType: 0
@@ -24,15 +24,19 @@ MonoBehaviour:
       UnlockCurrency: 0
       UnlockCost: -1
       DurationUpgradeList:
-      - Cost: 1
+      - Cost: 0
+        NewDuration: 8
+      - Cost: 0
         NewDuration: 6
-      - Cost: 50
+      - Cost: 0
         NewDuration: 4
-      - Cost: 50
+      - Cost: 0
         NewDuration: 2
+      - Cost: 0
+        NewDuration: 1
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
-    - Name: Shop item
+    - Name: Crit Headpats
       RefreshType: 0
       InitialDuration: 30
       ReturnCurrency: 1
@@ -48,7 +52,7 @@ MonoBehaviour:
         NewDuration: 0
       MultiplierLevelValue: 0
       MultiplierUpgradeCostPerLevel: 0
-    - Name: Shop item
+    - Name: Pat Assist
       RefreshType: 0
       InitialDuration: 30
       ReturnCurrency: 1
@@ -71,17 +75,17 @@ MonoBehaviour:
       InitialReturnValue: 1
       Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
         type: 3}
-      UnlockCurrency: 0
+      UnlockCurrency: 2
       UnlockCost: -1
       DurationUpgradeList:
-      - Cost: 1
+      - Cost: 2
         NewDuration: 8
-      - Cost: 0
-        NewDuration: 0
-      MultiplierLevelValue: 0
-      MultiplierUpgradeCostPerLevel: 0
-    - Name: Shop item
-      RefreshType: 0
+      - Cost: 10
+        NewDuration: 4
+      MultiplierLevelValue: 1
+      MultiplierUpgradeCostPerLevel: 5
+    - Name: Emote
+      RefreshType: 2
       InitialDuration: 30
       ReturnCurrency: 1
       InitialReturnValue: 1
@@ -89,6 +93,118 @@ MonoBehaviour:
         type: 3}
       UnlockCurrency: 0
       UnlockCost: 5
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Change Accessory
+      RefreshType: 2
+      InitialDuration: 30
+      ReturnCurrency: 3
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: 5
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Merch
+      RefreshType: 0
+      InitialDuration: 30
+      ReturnCurrency: 0
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: 5
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Ramen
+      RefreshType: 0
+      InitialDuration: 30
+      ReturnCurrency: 1
+      InitialReturnValue: 5
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: 5
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Ad Payout
+      RefreshType: 1
+      InitialDuration: 30
+      ReturnCurrency: 1
+      InitialReturnValue: 5
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 2
+      UnlockCost: 20
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Tweet
+      RefreshType: 1
+      InitialDuration: 30
+      ReturnCurrency: 1
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: 5
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: TikTok
+      RefreshType: 2
+      InitialDuration: 30
+      ReturnCurrency: 5
+      InitialReturnValue: 1
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: 5
+      DurationUpgradeList:
+      - Cost: 1
+        NewDuration: 8
+      - Cost: 0
+        NewDuration: 0
+      MultiplierLevelValue: 0
+      MultiplierUpgradeCostPerLevel: 0
+    - Name: Youtube
+      RefreshType: 0
+      InitialDuration: 30
+      ReturnCurrency: 5
+      InitialReturnValue: 5
+      Icon: {fileID: -4359563614128648932, guid: 6b37a37a62d37244d8384dcbca65084b,
+        type: 3}
+      UnlockCurrency: 0
+      UnlockCost: 50
       DurationUpgradeList:
       - Cost: 1
         NewDuration: 8
